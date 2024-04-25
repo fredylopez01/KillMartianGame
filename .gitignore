@@ -1,6 +1,7 @@
 ### Java ###
 # Clases compiladas
 *.class
+bin/
 
 # Archivos de log
 *.log
