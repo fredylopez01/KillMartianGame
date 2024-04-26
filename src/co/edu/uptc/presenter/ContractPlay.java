@@ -2,6 +2,7 @@ package co.edu.uptc.presenter;
 
 import java.util.ArrayList;
 
+import co.edu.uptc.models.ManagerPacecraft;
 import co.edu.uptc.pojos.Element;
 
 public class ContractPlay {
@@ -10,8 +11,11 @@ public class ContractPlay {
         public void start();
         public void resume();
         public void stop();
-        public void run(int numberElements);
+        public void addAlliens();
+        public void shoot();
         public ArrayList<Element> getElements();
+        public ManagerPacecraft getManagerPacecraft();
+        public ArrayList<Element> getBullets();
     }
 
     public interface View {
@@ -26,6 +30,9 @@ public class ContractPlay {
 
         public void start();
         public void stop();
+        public void shoot();
         public ArrayList<Element> getElements();
+        public ManagerPacecraft getManagerPacecraft();
+        public ArrayList<Element> getBullets();
     }
 }

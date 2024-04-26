@@ -3,6 +3,7 @@ package co.edu.uptc.presenter;
 import java.util.ArrayList;
 
 import co.edu.uptc.models.ManagerModel;
+import co.edu.uptc.models.ManagerPacecraft;
 import co.edu.uptc.pojos.Element;
 import co.edu.uptc.presenter.ContractPlay.Model;
 import co.edu.uptc.presenter.ContractPlay.View;
@@ -35,12 +36,13 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     public void run() {
         makeMVP();
         view.run();
-        model.run(30);
+        model.addAlliens();
     }
 
     @Override
     public void start() {
         model.resume();
+        // model.addAlliens();
         model.start();
     }
 
@@ -48,11 +50,21 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     public void stop(){
         model.stop();
     }
-
+    @Override
+    public void shoot() {
+        model.shoot();
+    }
     @Override
     public ArrayList<Element> getElements(){
         return model.getElements();
     }
-    
+    @Override
+    public ManagerPacecraft getManagerPacecraft() {
+        return model.getManagerPacecraft();
+    }
+    @Override
+    public ArrayList<Element> getBullets() {
+        return model.getBullets();
+    }
     
 }

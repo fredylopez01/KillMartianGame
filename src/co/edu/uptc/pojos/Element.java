@@ -7,6 +7,7 @@ public class Element {
     private int height;
     private int type;
     private int speed;
+    private boolean isActive;
     public int getX() {
         return x;
     }
@@ -43,4 +44,11 @@ public class Element {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+    public boolean isActive() {
+        return isActive;
+    }
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+    
 }
