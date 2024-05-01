@@ -12,6 +12,7 @@ import co.edu.uptc.view.DashBoard.DashBoard;
 public class ManagerPresenter implements ContractPlay.Presenter {
     private ContractPlay.Model model;
     private ContractPlay.View view;
+    private boolean isPainted;
 
     @Override
     public void setModel(Model model) {
@@ -36,13 +37,12 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     public void run() {
         makeMVP();
         view.run();
-        model.addAlliens();
     }
 
     @Override
     public void start() {
+        model.addAlliens();
         model.resume();
-        // model.addAlliens();
         model.start();
     }
 
@@ -65,6 +65,14 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     @Override
     public ArrayList<Element> getBullets() {
         return model.getBullets();
+    }
+    @Override
+    public boolean isPainted(){
+        return this.isPainted;
+    }
+    @Override
+    public void setPainted(boolean isPainted){
+        this.isPainted = isPainted;
     }
     
 }

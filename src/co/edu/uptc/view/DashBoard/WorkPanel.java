@@ -28,15 +28,12 @@ public class WorkPanel extends JPanel {
 
     public void start(ArrayList<Element> alliens){
         this.alliens = alliens;
-        repaint();
     }
     public void movePaceCraft(Pacecraft pacecraft){
         this.pacecraft = pacecraft;
-        repaint();
     }
     public void shoot(ArrayList<Element> bullets){
         this.bullets = bullets;
-        repaint();
     }
 	
 	public void paintComponent(Graphics g) {
@@ -50,7 +47,8 @@ public class WorkPanel extends JPanel {
             if(allien.isActive()){
                 g.drawImage(
                     new ImageIcon(getClass().getResource(typeAllien(allien.getType()))).getImage(),
-                    allien.getX(), allien.getY(),
+                    allien.getX(), 
+                    allien.getY(),
                     allien.getWidth(), 
                     allien.getHeight(), 
                     this
@@ -62,7 +60,8 @@ public class WorkPanel extends JPanel {
         if(pacecraft.getDx() != 0){
             g.drawImage(
             new ImageIcon(getClass().getResource(typePacecraft(pacecraft.getType()))).getImage(),
-            pacecraft.getDx(), this.getHeight()-100,
+            pacecraft.getDx(), 
+            this.getHeight()-pacecraft.getHeight(),
             pacecraft.getWidth(), 
             pacecraft.getHeight(), 
             this

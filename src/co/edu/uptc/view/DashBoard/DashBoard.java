@@ -37,7 +37,6 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     }
 
     public void run(){
-        workPanel.movePaceCraft(presenter.getManagerPacecraft().getPacecraft());
         setVisible(true);
     }
 
@@ -59,7 +58,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
             @Override
             public void run() {
                 while(true){
-                    workPanel.start(presenter.getElements());
+                    repaintComponents();
                 }
             }
         });
@@ -78,6 +77,21 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     public WorkPanel getWorkPanel() {
         return workPanel;
     }
+    public synchronized void repaintComponents(){
+        while (presenter.isPainted()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        presenter.setPainted(true);
+        workPanel.start(presenter.getElements());
+        workPanel.movePaceCraft(presenter.getManagerPacecraft().getPacecraft());
+        workPanel.shoot(presenter.getBullets());
+        workPanel.repaint();
+        notifyAll();
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -89,17 +103,15 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
             presenter.getManagerPacecraft().left();
-            workPanel.movePaceCraft(presenter.getManagerPacecraft().getPacecraft());
+            
         }
         if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
             presenter.getManagerPacecraft().right();
-            workPanel.movePaceCraft(presenter.getManagerPacecraft().getPacecraft());
+            
         }
-        if(key == KeyEvent.VK_ENTER){
+        if(key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE){
             presenter.shoot();
-            workPanel.shoot(presenter.getBullets());
         }
-        repaint();
     }
 
     @Override

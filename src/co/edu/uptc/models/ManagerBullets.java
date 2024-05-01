@@ -8,14 +8,14 @@ public class ManagerBullets {
     public boolean statusThread;
     private int height;
     
-    public ManagerBullets(){
-        createElement();
+    public ManagerBullets(int x){
+        createElement(x);
         statusThread = true;
     }
-    public void createElement(){
+    public void createElement(int x){
         this.element = new Element();
-        this.element.setX((int)(Math.random()*Values.widthWindow));
-        this.element.setY((int)(Math.random()*Values.heightWindow/2));
+        this.element.setX(x);
+        this.element.setY(Values.heightWindow-70);
         height = (int)(Math.random()*(50-20)+20);
         this.element.setWidth(20);
         this.element.setHeight(20);
@@ -24,7 +24,7 @@ public class ManagerBullets {
         this.element.setActive(true);
     }
     public void up(){
-        if(element.getY()-height/2<=0){
+        if(element.getY()<=0){
             element.setActive(false);
         }
         element.setY(element.getY()-height/3);
@@ -33,7 +33,7 @@ public class ManagerBullets {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(statusThread) {
+                while(statusThread  && element.isActive()) {
                     up();
                     try {
                         Thread.sleep(element.getSpeed());

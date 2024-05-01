@@ -34,5 +34,8 @@ public class ContractPlay {
         public ArrayList<Element> getElements();
         public ManagerPacecraft getManagerPacecraft();
         public ArrayList<Element> getBullets();
+
+        public boolean isPainted();
+        public void setPainted(boolean isPainted);
     }
 }

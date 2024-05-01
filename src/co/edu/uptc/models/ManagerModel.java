@@ -12,50 +12,35 @@ public class ManagerModel implements ContractPlay.Model {
     private ArrayList<ManagerAlliens> managerElements;
     private ManagerPacecraft managerPacecraft;
     private ArrayList<ManagerBullets> managerBullets;
-    private boolean isAddAllien;
 
     public ManagerModel(){
         managerElements = new ArrayList<>();
         managerPacecraft = new ManagerPacecraft();
         managerBullets = new ArrayList<>();
-        isAddAllien = true;
     }
 
     @Override
     public void addAlliens(){
-        // Thread thread = new Thread(new Runnable() {
-        //     @Override
-        //     public void run() {
-        //         while(managerPacecraft.isStatusThread()) {
-        //             try {
-        //                 addAllien();
-        //                 Thread.sleep((int)(Math.random()*(Values.maxSpeedTime-Values.minSpeedTime+1)+Values.minSpeedTime));
-        //             } catch (InterruptedException e) {
-        //                 e.printStackTrace();
-        //                 System.out.println(e.getMessage());
-        //             }
-        //         }
-        //     }
-        // });
-        // thread.start();
-        for (int i = 0; i < 200; i++) {
-            try {
-                addAllien();
-                Thread.sleep((int)(Math.random()*(Values.maxSpeedTime-Values.minSpeedTime+1)+Values.minSpeedTime));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(managerPacecraft.isStatusThread()) {
+                    try {
+                        addAllien();
+                        Thread.sleep((int)(Math.random()*(Values.maxSpeedTimeAdd-Values.minSpeedTimeAdd+1)+Values.minSpeedTimeAdd));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        System.out.println(e.getMessage());
+                    }
+                }
             }
-        }
+        });
+        thread.start();
     }
-    public synchronized void addAllien() throws InterruptedException{
+    public synchronized void addAllien() {
         ManagerAlliens managerElement = new ManagerAlliens();
-        while(isAddAllien){
-            wait();
-        }
-        isAddAllien = true;
+        managerElement.bigMove();
         managerElements.add(managerElement);
-        System.out.println("Add:"+managerElements.size());
-        notifyAll();
     }
     @Override
     public void start(){
@@ -66,19 +51,9 @@ public class ManagerModel implements ContractPlay.Model {
         }
     }
     public synchronized void moveAlliens(){
-        while(!isAddAllien){
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        isAddAllien = false;
         for (ManagerAlliens managerElement : managerElements) {
             managerElement.bigMove();
         }
-        System.out.println(managerElements.size());
-        notifyAll();
     }
     @Override
     public void resume(){
@@ -101,11 +76,26 @@ public class ManagerModel implements ContractPlay.Model {
         }
     }
     @Override
-    public void shoot(){
-        ManagerBullets managerBullet = new ManagerBullets();
+    public synchronized void shoot(){
+        int x = this.managerPacecraft.getPacecraft().getDx();
+        ManagerBullets managerBullet = new ManagerBullets(x);
         managerBullets.add(managerBullet);
+        ManagerBullets managerBullet1 = new ManagerBullets(x+75);
+        managerBullets.add(managerBullet1);
         for (ManagerBullets manaBullet : managerBullets) {
             manaBullet.bigMove();
+        }
+    }
+    public void threadVerifyPositions(){
+
+    }
+    public void verifyPositions(){
+        for (ManagerBullets managerBullet : managerBullets) {
+            for (ManagerAlliens managerAllien : managerElements) {
+                if(managerBullet.getElement().getX() == managerAllien.getElement().getX()+managerAllien.getElement().getHeight()){
+                    managerAllien.getElement().setActive(false);
+                }
+            }
         }
     }
     @Override
@@ -117,15 +107,24 @@ public class ManagerModel implements ContractPlay.Model {
         return elements;
     }
     @Override
-    public ArrayList<Element> getBullets(){
+    public synchronized ArrayList<Element> getBullets(){
+        while (!presenter.isPainted()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        presenter.setPainted(false);
         ArrayList<Element> bullets = new ArrayList<>();
         for (ManagerBullets managerBullet : managerBullets) {
             bullets.add(managerBullet.getElement());
         }
+        notifyAll();
         return bullets;
     }
     @Override
-    public ManagerPacecraft getManagerPacecraft(){
+    public synchronized ManagerPacecraft getManagerPacecraft(){
         return managerPacecraft;
     }
     @Override
