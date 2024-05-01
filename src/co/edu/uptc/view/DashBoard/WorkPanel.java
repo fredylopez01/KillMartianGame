@@ -38,6 +38,7 @@ public class WorkPanel extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+        g.drawImage(new ImageIcon(getClass().getResource("/co/edu/uptc/view/DashBoard/img/background.jpg")). getImage(),0, 0,this.getWidth(), this.getHeight(), this);
         paintAlliens(g);
         paintPaceCraft(g);
         paintBullets(g);
@@ -84,11 +85,11 @@ public class WorkPanel extends JPanel {
     public String typeAllien(int type){
         String allien = null;
         switch (type) {
-            case 0 -> allien = "/co/edu/uptc/view/DashBoard/img/martian.png";
+            case 0 -> allien = "/co/edu/uptc/view/DashBoard/img/martian2.png";
             case 1 -> allien = "/co/edu/uptc/view/DashBoard/img/martian1.png";
-            case 3 -> allien = "/co/edu/uptc/view/DashBoard/img/martian.png";
+            case 3 -> allien = "/co/edu/uptc/view/DashBoard/img/martian2.png";
             case 4 -> allien ="/co/edu/uptc/view/DashBoard/img/martian1.png";
-            default -> allien = "/co/edu/uptc/view/DashBoard/img/martian.png";
+            default -> allien = "/co/edu/uptc/view/DashBoard/img/martian2.png";
         }
         return allien;
     }
@@ -96,8 +97,8 @@ public class WorkPanel extends JPanel {
     public String typePacecraft(int type){
         String pacecraft = null;
         switch (type) {
-            case 0 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/spacecraft2.png";
-            case 1 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/spacecraft3.png";
+            case 0 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/pacecraft2.png";
+            case 1 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/pacecraft3.png";
             case 2 -> pacecraft= "/co/edu/uptc/view/DashBoard/img/spacecraft4.png";
             default -> pacecraft = "/co/edu/uptc/view/DashBoard/img/spacecraft5.png";
         }
@@ -107,10 +108,10 @@ public class WorkPanel extends JPanel {
     public String typeBullet(int type){
         String pacecraft = null;
         switch (type) {
-            case 0 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/bullet.png";
-            case 1 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/bullets.png";
-            case 2 -> pacecraft= "/co/edu/uptc/view/DashBoard/img/bullets.png";
-            default -> pacecraft = "/co/edu/uptc/view/DashBoard/img/bullet.png";
+            case 0 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/bullet1.png";
+            case 1 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/bullet2.png";
+            case 2 -> pacecraft= "/co/edu/uptc/view/DashBoard/img/bullet1.png";
+            default -> pacecraft = "/co/edu/uptc/view/DashBoard/img/bullet2.png";
         }
         return pacecraft;
     }

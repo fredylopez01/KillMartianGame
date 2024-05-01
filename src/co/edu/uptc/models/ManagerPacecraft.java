@@ -1,7 +1,7 @@
 package co.edu.uptc.models;
 
+import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.Pacecraft;
-import co.edu.uptc.pojos.Values;
 
 public class ManagerPacecraft {
     private Pacecraft pacecraft;
@@ -12,20 +12,20 @@ public class ManagerPacecraft {
     }
     public void createPacecraft(){
         pacecraft = new Pacecraft();
-        pacecraft.setWidth(100);
-        pacecraft.setHeight(100);
+        pacecraft.setWidth(Values.lengthPaceCraft);
+        pacecraft.setHeight(Values.lengthPaceCraft);
         pacecraft.setDx(Values.widthWindow/2-pacecraft.getWidth()/2);
         pacecraft.setType(0);
     }
 
     public void right(){
-        if(pacecraft.getDx()<Values.widthWindow-pacecraft.getWidth() && statusThread){
+        if(pacecraft.getDx()+10<Values.widthWindow-10 && statusThread){
             pacecraft.setDx(pacecraft.getDx()+10);
         }
     }
 
     public void left(){
-        if(pacecraft.getDx()>0 && statusThread){
+        if(pacecraft.getDx()-10>0 && statusThread){
             pacecraft.setDx(pacecraft.getDx()-10);
         }
     }

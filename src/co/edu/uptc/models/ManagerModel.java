@@ -2,8 +2,8 @@ package co.edu.uptc.models;
 
 import java.util.ArrayList;
 
+import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.Element;
-import co.edu.uptc.pojos.Values;
 import co.edu.uptc.presenter.ContractPlay;
 import co.edu.uptc.presenter.ContractPlay.Presenter;
 
@@ -77,13 +77,14 @@ public class ManagerModel implements ContractPlay.Model {
     }
     @Override
     public synchronized void shoot(){
-        int x = this.managerPacecraft.getPacecraft().getDx();
-        ManagerBullets managerBullet = new ManagerBullets(x);
-        managerBullets.add(managerBullet);
-        ManagerBullets managerBullet1 = new ManagerBullets(x+75);
-        managerBullets.add(managerBullet1);
-        for (ManagerBullets manaBullet : managerBullets) {
-            manaBullet.bigMove();
+        if(managerPacecraft.isStatusThread()){
+            int x = this.managerPacecraft.getPacecraft().getDx();
+            ManagerBullets managerBullet = new ManagerBullets(x);
+            managerBullets.add(managerBullet);
+            ManagerBullets managerBullet1 = new ManagerBullets(x+75);
+            managerBullets.add(managerBullet1);
+            managerBullet.bigMove();
+            managerBullet1.bigMove();
         }
     }
     public void threadVerifyPositions(){

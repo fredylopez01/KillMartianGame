@@ -1,7 +1,7 @@
 package co.edu.uptc.models;
 
+import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.Element;
-import co.edu.uptc.pojos.Values;
 import co.edu.uptc.view.DashBoard.DirectionEnum;
 
 public class ManagerAlliens {

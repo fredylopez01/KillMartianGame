@@ -1,7 +1,9 @@
 package co.edu.uptc.view.DashBoard;
 
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
+import co.edu.uptc.Utils.Values;
 import co.edu.uptc.presenter.ContractPlay;
 import co.edu.uptc.presenter.ContractPlay.Presenter;
 
@@ -15,12 +17,10 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     private ContractPlay.Presenter presenter;
     private MenuPanel menuPanel;
     private WorkPanel workPanel;
+    private Sound sound;
 
     public DashBoard(){
-        this.setLayout(new BorderLayout());
         initComponents();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
     }
 
     private DashBoard getInstance(){
@@ -28,7 +28,10 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     }
 
     private void initComponents() {
-        setBounds(1, 1, 850, 600);
+        setBounds(0, 0, Values.widthWindow, Values.heightWindow);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setLayout(new BorderLayout());
         menuPanel = new MenuPanel(getInstance());
         this.add(menuPanel, BorderLayout.NORTH);
         workPanel = new WorkPanel();
@@ -54,6 +57,8 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     }
     public void start(){
         presenter.start();
+        sound = new Sound(SoundFiles.loadClip("/co/edu/uptc/view/DashBoard/sound/background.wav"));
+        sound.play();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -66,6 +71,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     }
     public void stop(){
         presenter.stop();
+        sound.stop();
     }
     @Override
     public void setPresenter(Presenter presenter) {
@@ -103,14 +109,20 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
             presenter.getManagerPacecraft().left();
-            
-        }
+        } 
         if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
             presenter.getManagerPacecraft().right();
-            
-        }
+        } 
         if(key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE){
-            presenter.shoot();
+            shoot();
+        }
+    }
+
+    public void shoot(){
+        presenter.shoot();
+        if(presenter.getManagerPacecraft().isStatusThread()){
+            Sound sound = new Sound(SoundFiles.loadClip("/co/edu/uptc/view/DashBoard/sound/boom.wav"));
+            sound.play();
         }
     }
 
