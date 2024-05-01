@@ -17,7 +17,7 @@ public class ManagerBullets {
         this.element.setY(Values.heightWindow-Values.lengthPaceCraft-60);
         this.element.setWidth(Values.lengthBullet);
         this.element.setHeight(Values.lengthBullet);
-        this.element.setType((int)(Math.random()*5));
+        this.element.setType(0);
         this.element.setSpeed(Values.speedBullet);
         this.element.setActive(true);
     }

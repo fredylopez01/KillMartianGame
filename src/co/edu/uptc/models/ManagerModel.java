@@ -2,6 +2,7 @@ package co.edu.uptc.models;
 
 import java.util.ArrayList;
 
+import co.edu.uptc.Utils.MyUtils;
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.Element;
 import co.edu.uptc.presenter.ContractPlay;
@@ -25,13 +26,8 @@ public class ManagerModel implements ContractPlay.Model {
             @Override
             public void run() {
                 while(managerPacecraft.isStatusThread()) {
-                    try {
-                        addAllien();
-                        Thread.sleep((int)(Math.random()*(Values.maxSpeedTimeAdd-Values.minSpeedTimeAdd+1)+Values.minSpeedTimeAdd));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        System.out.println(e.getMessage());
-                    }
+                    addAllien();
+                    MyUtils.sleep((int)(Math.random()*(Values.maxSpeedTimeAdd-Values.minSpeedTimeAdd+1)+Values.minSpeedTimeAdd));
                 }
             }
         });
@@ -87,17 +83,41 @@ public class ManagerModel implements ContractPlay.Model {
             managerBullet1.bigMove();
         }
     }
+    @Override
     public void threadVerifyPositions(){
-
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(managerPacecraft.isStatusThread()) {
+                    verifyPositions();
+                    MyUtils.sleep(15);
+                }
+            }
+        });
+        thread.start();
     }
-    public void verifyPositions(){
+    public synchronized void verifyPositions(){
         for (ManagerBullets managerBullet : managerBullets) {
             for (ManagerAlliens managerAllien : managerElements) {
-                if(managerBullet.getElement().getX() == managerAllien.getElement().getX()+managerAllien.getElement().getHeight()){
-                    managerAllien.getElement().setActive(false);
+                if(isBurst(managerBullet, managerAllien)){
+                    // managerAllien.getElement().setActive(false);
+                    managerAllien.getElement().setType(6);
+                    managerBullet.getElement().setActive(false);
                 }
             }
         }
+    }
+    public boolean isBurst(ManagerBullets bullet, ManagerAlliens allien){
+        boolean isBoom = false;
+        Element b = bullet.getElement();
+        Element a = allien.getElement();
+        if(b.isActive() && a.isActive()){
+            if(b.getX()>=a.getX() && b.getX()<a.getX()+a.getWidth()
+                && b.getY()>=a.getY() && b.getY()<a.getY()+a.getHeight()){
+                isBoom = true;
+            }
+        }
+        return isBoom;
     }
     @Override
     public ArrayList<Element> getElements(){

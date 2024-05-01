@@ -12,6 +12,7 @@ public class ContractPlay {
         public void resume();
         public void stop();
         public void addAlliens();
+        public void threadVerifyPositions();
         public void shoot();
         public ArrayList<Element> getElements();
         public ManagerPacecraft getManagerPacecraft();

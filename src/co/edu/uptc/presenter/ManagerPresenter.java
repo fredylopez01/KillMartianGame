@@ -45,6 +45,7 @@ public class ManagerPresenter implements ContractPlay.Presenter {
         model.addAlliens();
         model.resume();
         model.start();
+        model.threadVerifyPositions();
     }
 
     @Override

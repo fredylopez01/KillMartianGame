@@ -89,6 +89,7 @@ public class WorkPanel extends JPanel {
             case 1 -> allien = "/co/edu/uptc/view/DashBoard/img/martian1.png";
             case 3 -> allien = "/co/edu/uptc/view/DashBoard/img/martian2.png";
             case 4 -> allien ="/co/edu/uptc/view/DashBoard/img/martian1.png";
+            case 6 -> allien ="/co/edu/uptc/view/DashBoard/img/burst.png";
             default -> allien = "/co/edu/uptc/view/DashBoard/img/martian2.png";
         }
         return allien;
