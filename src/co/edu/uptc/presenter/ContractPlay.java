@@ -36,6 +36,8 @@ public class ContractPlay {
         public ArrayList<Element> getBullets();
 
         public boolean isPainted();
+        public boolean isGameWorking();
+        public void setIsGameWorking(boolean isGameWorking);
         public void setPainted(boolean isPainted);
     }
 }

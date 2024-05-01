@@ -77,11 +77,11 @@ public class ManagerModel implements ContractPlay.Model {
     }
     @Override
     public synchronized void shoot(){
-        if(managerPacecraft.isStatusThread()){
+        if(presenter.isGameWorking()){
             int x = this.managerPacecraft.getPacecraft().getDx();
-            ManagerBullets managerBullet = new ManagerBullets(x);
+            ManagerBullets managerBullet = new ManagerBullets(x+5);
             managerBullets.add(managerBullet);
-            ManagerBullets managerBullet1 = new ManagerBullets(x+75);
+            ManagerBullets managerBullet1 = new ManagerBullets(x+85);
             managerBullets.add(managerBullet1);
             managerBullet.bigMove();
             managerBullet1.bigMove();

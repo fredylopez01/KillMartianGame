@@ -13,6 +13,7 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     private ContractPlay.Model model;
     private ContractPlay.View view;
     private boolean isPainted;
+    private boolean isGameWorking;
 
     @Override
     public void setModel(Model model) {
@@ -73,6 +74,14 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     @Override
     public void setPainted(boolean isPainted){
         this.isPainted = isPainted;
+    }
+    @Override
+    public boolean isGameWorking() {
+        return isGameWorking;
+    }
+    @Override
+    public void setIsGameWorking(boolean isGameWorking) {
+        this.isGameWorking = isGameWorking;
     }
     
 }

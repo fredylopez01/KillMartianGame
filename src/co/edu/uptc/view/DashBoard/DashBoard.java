@@ -1,11 +1,11 @@
 package co.edu.uptc.view.DashBoard;
 
-import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.presenter.ContractPlay;
 import co.edu.uptc.presenter.ContractPlay.Presenter;
+import co.edu.uptc.view.DashBoard.ViewUtils.Sounds;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -17,7 +17,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     private ContractPlay.Presenter presenter;
     private MenuPanel menuPanel;
     private WorkPanel workPanel;
-    private Sound sound;
+    private Sounds sounds;
 
     public DashBoard(){
         initComponents();
@@ -36,6 +36,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         this.add(menuPanel, BorderLayout.NORTH);
         workPanel = new WorkPanel();
         this.add(workPanel, BorderLayout.CENTER);
+        sounds = new Sounds();
         this.addKeyListener(this);
     }
 
@@ -50,28 +51,36 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     public void actionPerformed(ActionEvent e) {
         String comand = e.getActionCommand();
         switch (comand) {
-            case "Start" -> start();
-            case "Stop" -> stop();
+            case "Play" -> start();
+            case "Pause" -> stop();
+            case "chronometer" -> menuPanel.updateChronometer();
             default -> System.out.println(comand);
         }
     }
     public void start(){
-        presenter.start();
-        sound = new Sound(SoundFiles.loadClip("/co/edu/uptc/view/DashBoard/sound/background.wav"));
-        sound.play();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    repaintComponents();
+        if(!presenter.isGameWorking()){
+            presenter.setIsGameWorking(true);
+            presenter.start();
+            sounds.playSoundBackground();
+            menuPanel.initChronometer();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(presenter.isGameWorking()){
+                        repaintComponents();
+                    }
                 }
-            }
-        });
-        thread.start();
+            });
+            thread.start();
+        }
     }
     public void stop(){
-        presenter.stop();
-        sound.stop();
+        if(presenter.isGameWorking()){
+            presenter.setIsGameWorking(false);
+            presenter.stop();
+            sounds.stopSoundBackground();
+            menuPanel.pauseChronometer();
+        }
     }
     @Override
     public void setPresenter(Presenter presenter) {
@@ -120,9 +129,8 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
 
     public void shoot(){
         presenter.shoot();
-        if(presenter.getManagerPacecraft().isStatusThread()){
-            Sound sound = new Sound(SoundFiles.loadClip("/co/edu/uptc/view/DashBoard/sound/boom.wav"));
-            sound.play();
+        if(presenter.isGameWorking()){
+            sounds.playSoundShoot();
         }
     }
 

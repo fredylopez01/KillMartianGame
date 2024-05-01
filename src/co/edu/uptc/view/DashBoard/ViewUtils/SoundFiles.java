@@ -1,4 +1,4 @@
-package co.edu.uptc.view.DashBoard;
+package co.edu.uptc.view.DashBoard.ViewUtils;
 
 import java.io.IOException;
 import javax.sound.sampled.AudioSystem;
@@ -8,6 +8,10 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class SoundFiles {
     private static Clip clip;
+
+    public SoundFiles(String route){
+        loadClip(route);
+    }
 
     public static Clip loadClip(String route){
         try {
@@ -19,16 +23,14 @@ public class SoundFiles {
         return clip;
     }
 
-    public static void play(){
+    public void play(){
         if(clip!=null){
             clip.setFramePosition(0);
             clip.start();
         }
     }
 
-    public static void stop(){
-        if(clip!=null && clip.isRunning()){
-            clip.stop();
-        }
+    public void stop(){
+        clip.stop();
     }
 }

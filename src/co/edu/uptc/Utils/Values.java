@@ -11,4 +11,5 @@ public class Values {
     public static int minSpeedTimeAdd = Integer.valueOf(AdminProperties.read("minSpeedTimeAdd"));
     public static int lengthPaceCraft = Integer.valueOf(AdminProperties.read("lengthPaceCraft"));
     public static int lengthBullet = Integer.valueOf(AdminProperties.read("lengthBullet"));
+    public static int speedBullet = Integer.valueOf(AdminProperties.read("speedBullet"));
 }

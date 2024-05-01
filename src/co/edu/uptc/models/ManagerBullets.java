@@ -18,7 +18,7 @@ public class ManagerBullets {
         this.element.setWidth(Values.lengthBullet);
         this.element.setHeight(Values.lengthBullet);
         this.element.setType((int)(Math.random()*5));
-        this.element.setSpeed(90);
+        this.element.setSpeed(Values.speedBullet);
         this.element.setActive(true);
     }
     public void up(){
