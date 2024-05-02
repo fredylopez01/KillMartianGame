@@ -1,5 +1,6 @@
 package co.edu.uptc.view.DashBoard;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import co.edu.uptc.Utils.Values;
@@ -14,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class DashBoard extends JFrame implements ActionListener, KeyListener, ContractPlay.View {
+    private ImageIcon icon;
     private ContractPlay.Presenter presenter;
     private MenuPanel menuPanel;
     private WorkPanel workPanel;
@@ -37,6 +39,9 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         workPanel = new WorkPanel();
         this.add(workPanel, BorderLayout.CENTER);
         sounds = new Sounds();
+        this.setTitle("Martian Eliminator");
+        icon = new ImageIcon(getClass().getResource(Values.pathImgIcon));
+		setIconImage(icon.getImage());
         this.addKeyListener(this);
     }
 

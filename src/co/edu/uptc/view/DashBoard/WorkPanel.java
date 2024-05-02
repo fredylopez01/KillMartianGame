@@ -1,12 +1,12 @@
 package co.edu.uptc.view.DashBoard;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.Element;
 import co.edu.uptc.pojos.Pacecraft;
 
@@ -23,7 +23,6 @@ public class WorkPanel extends JPanel {
         this.alliens = new ArrayList<>();
         this.pacecraft = new Pacecraft();
         this.bullets = new ArrayList<>();
-        this.setBackground(Color.BLACK);
     }
 
     public void start(ArrayList<Element> alliens){
@@ -38,7 +37,7 @@ public class WorkPanel extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-        g.drawImage(new ImageIcon(getClass().getResource("/co/edu/uptc/view/DashBoard/img/background.jpg")). getImage(),0, 0,this.getWidth(), this.getHeight(), this);
+        g.drawImage(new ImageIcon(getClass().getResource(Values.pathImgBackground)).getImage(),0, 0,this.getWidth(), this.getHeight(), this);
         paintAlliens(g);
         paintPaceCraft(g);
         paintBullets(g);
@@ -85,12 +84,12 @@ public class WorkPanel extends JPanel {
     public String typeAllien(int type){
         String allien = null;
         switch (type) {
-            case 0 -> allien = "/co/edu/uptc/view/DashBoard/img/martian2.png";
-            case 1 -> allien = "/co/edu/uptc/view/DashBoard/img/martian1.png";
-            case 3 -> allien = "/co/edu/uptc/view/DashBoard/img/martian2.png";
-            case 4 -> allien ="/co/edu/uptc/view/DashBoard/img/martian1.png";
-            case 6 -> allien ="/co/edu/uptc/view/DashBoard/img/burst.png";
-            default -> allien = "/co/edu/uptc/view/DashBoard/img/martian2.png";
+            case 0 -> allien = Values.pathImgMartian1;
+            case 1 -> allien = Values.pathImgMartian2;
+            case 3 -> allien = Values.pathImgMartian3;
+            case 4 -> allien = Values.pathImgMartian4;
+            case 6 -> allien = Values.pathImgBurst;
+            default -> allien = Values.pathImgMartian4;
         }
         return allien;
     }
@@ -98,10 +97,10 @@ public class WorkPanel extends JPanel {
     public String typePacecraft(int type){
         String pacecraft = null;
         switch (type) {
-            case 0 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/pacecraft2.png";
-            case 1 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/pacecraft3.png";
-            case 2 -> pacecraft= "/co/edu/uptc/view/DashBoard/img/spacecraft4.png";
-            default -> pacecraft = "/co/edu/uptc/view/DashBoard/img/spacecraft5.png";
+            case 0 -> pacecraft = Values.pathImgPacecraft1;
+            case 1 -> pacecraft = Values.pathImgPacecraft2;
+            case 2 -> pacecraft= Values.pathImgPacecraft3;
+            default -> pacecraft = Values.pathImgPacecraft4;
         }
         return pacecraft;
     }
@@ -109,10 +108,9 @@ public class WorkPanel extends JPanel {
     public String typeBullet(int type){
         String pacecraft = null;
         switch (type) {
-            case 0 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/bullet1.png";
-            case 1 -> pacecraft = "/co/edu/uptc/view/DashBoard/img/bullet2.png";
-            case 2 -> pacecraft= "/co/edu/uptc/view/DashBoard/img/bullet1.png";
-            default -> pacecraft = "/co/edu/uptc/view/DashBoard/img/bullet2.png";
+            case 0 -> pacecraft = Values.pathImgBullet1;
+            case 1 -> pacecraft = Values.pathImgBullet2;
+            default -> pacecraft = Values.pathImgBullet1;
         }
         return pacecraft;
     }

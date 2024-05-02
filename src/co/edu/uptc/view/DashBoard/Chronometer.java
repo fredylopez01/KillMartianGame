@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import co.edu.uptc.Utils.Values;
+
 public class Chronometer extends JPanel {
     private Timer timer;
     private JLabel lblChronometer;
@@ -28,7 +30,7 @@ public class Chronometer extends JPanel {
         seconds = 0;
 
         lblChronometer = new JLabel(hours+"h:"+minuts+"m:"+seconds+"s");
-        imgChronometer = new ImageIcon(getClass().getResource("/co/edu/uptc/view/DashBoard/img/chronometer.png"));
+        imgChronometer = new ImageIcon(getClass().getResource(Values.pathImgChronometer));
         lblChronometer.setIcon(imgChronometer);
         lblChronometer.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         this.add(lblChronometer);

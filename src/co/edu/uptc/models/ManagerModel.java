@@ -7,6 +7,7 @@ import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.Element;
 import co.edu.uptc.presenter.ContractPlay;
 import co.edu.uptc.presenter.ContractPlay.Presenter;
+import co.edu.uptc.view.DashBoard.ViewUtils.Sounds;
 
 public class ManagerModel implements ContractPlay.Model {
     public ContractPlay.Presenter presenter;
@@ -25,7 +26,7 @@ public class ManagerModel implements ContractPlay.Model {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(managerPacecraft.isStatusThread()) {
+                while(presenter.isGameWorking()) {
                     addAllien();
                     MyUtils.sleep((int)(Math.random()*(Values.maxSpeedTimeAdd-Values.minSpeedTimeAdd+1)+Values.minSpeedTimeAdd));
                 }
@@ -47,9 +48,18 @@ public class ManagerModel implements ContractPlay.Model {
         }
     }
     public synchronized void moveAlliens(){
-        for (ManagerAlliens managerElement : managerElements) {
-            managerElement.bigMove();
+        while (!presenter.isPainted()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        presenter.setPainted(false);
+        for (ManagerAlliens managerAllien : managerElements) {
+            managerAllien.bigMove();
+        }
+        notifyAll();
     }
     @Override
     public void resume(){
@@ -76,11 +86,11 @@ public class ManagerModel implements ContractPlay.Model {
         if(presenter.isGameWorking()){
             int x = this.managerPacecraft.getPacecraft().getDx();
             ManagerBullets managerBullet = new ManagerBullets(x+5);
-            managerBullets.add(managerBullet);
             ManagerBullets managerBullet1 = new ManagerBullets(x+85);
-            managerBullets.add(managerBullet1);
             managerBullet.bigMove();
             managerBullet1.bigMove();
+            managerBullets.add(managerBullet);
+            managerBullets.add(managerBullet1);
         }
     }
     @Override
@@ -88,9 +98,9 @@ public class ManagerModel implements ContractPlay.Model {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(managerPacecraft.isStatusThread()) {
+                while(presenter.isGameWorking()) {
                     verifyPositions();
-                    MyUtils.sleep(15);
+                    MyUtils.sleep(25);
                 }
             }
         });
@@ -100,8 +110,10 @@ public class ManagerModel implements ContractPlay.Model {
         for (ManagerBullets managerBullet : managerBullets) {
             for (ManagerAlliens managerAllien : managerElements) {
                 if(isBurst(managerBullet, managerAllien)){
-                    // managerAllien.getElement().setActive(false);
-                    managerAllien.getElement().setType(6);
+                    managerAllien.getElement().setActive(false);
+                    // managerAllien.getElement().setType(6);
+                    Sounds sounds = new Sounds();
+                    sounds.playSoundBurst();
                     managerBullet.getElement().setActive(false);
                 }
             }

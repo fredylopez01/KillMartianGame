@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import co.edu.uptc.Utils.Values;
 import co.edu.uptc.view.DashBoard.ViewUtils.ShapedButtonProfile;
 
 public class MenuPanel extends JPanel {
@@ -27,12 +28,12 @@ public class MenuPanel extends JPanel {
        setBounds(100, 100, 100, 50);
 
        btnPlay = new JButton();
-       imgPlay = new ImageIcon(getClass().getResource("/co/edu/uptc/view/DashBoard/img/play.png"));
+       imgPlay = new ImageIcon(getClass().getResource(Values.pathImgPlay));
 	    btnPlay.setIcon(imgPlay);
        addBtn(btnPlay, "Play", listener, new Insets(2, 6, 2, 6));
 
        btnPause = new JButton();
-       imgPause = new ImageIcon(getClass().getResource("/co/edu/uptc/view/DashBoard/img/pause.png"));
+       imgPause = new ImageIcon(getClass().getResource(Values.pathImgResume));
         btnPause.setIcon(imgPause);
        addBtn(btnPause, "Pause", listener, new Insets(2, 6, 2, 6));
 

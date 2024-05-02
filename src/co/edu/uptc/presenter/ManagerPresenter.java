@@ -44,6 +44,7 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     public void start() {
         model.addAlliens();
         model.resume();
+        isPainted = true;
         model.start();
         model.threadVerifyPositions();
     }
