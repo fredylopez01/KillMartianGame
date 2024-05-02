@@ -68,6 +68,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
             presenter.start();
             sounds.playSoundBackground();
             menuPanel.initChronometer();
+            menuPanel.changButton(presenter.isGameWorking());
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -85,6 +86,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
             presenter.stop();
             sounds.stopSoundBackground();
             menuPanel.pauseChronometer();
+            menuPanel.changButton(presenter.isGameWorking());
         }
     }
     @Override

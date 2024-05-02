@@ -16,7 +16,6 @@ import co.edu.uptc.view.DashBoard.ViewUtils.ShapedButtonProfile;
 public class MenuPanel extends JPanel {
     private JButton btnPlay;
     private ImageIcon imgPlay;
-    private JButton btnPause;
     private ImageIcon imgPause;
     private Chronometer chronometer;
 
@@ -27,20 +26,27 @@ public class MenuPanel extends JPanel {
     private void initComponents(ActionListener listener) {
        setBounds(100, 100, 100, 50);
 
-       btnPlay = new JButton();
        imgPlay = new ImageIcon(getClass().getResource(Values.pathImgPlay));
-	    btnPlay.setIcon(imgPlay);
-       addBtn(btnPlay, "Play", listener, new Insets(2, 6, 2, 6));
-
-       btnPause = new JButton();
        imgPause = new ImageIcon(getClass().getResource(Values.pathImgResume));
-        btnPause.setIcon(imgPause);
-       addBtn(btnPause, "Pause", listener, new Insets(2, 6, 2, 6));
+       btnPlay = new JButton();
+       btnPlay.addActionListener(listener);
+       changButton(false);
+       this.add(btnPlay);
 
        chronometer = new Chronometer(listener);
        add(chronometer);
 
        this.setBackground(new Color(0x55ddff));
+    }
+
+    public void changButton(boolean isGameWorking){
+        if(isGameWorking){
+            btnPlay.setIcon(imgPause);
+            addBtn("Pause", new Insets(2, 6, 2, 6));
+        } else{
+            btnPlay.setIcon(imgPlay);
+            addBtn("Play", new Insets(2, 6, 2, 6));
+        }
     }
 
     public void updateChronometer(){
@@ -56,20 +62,19 @@ public class MenuPanel extends JPanel {
         chronometer.pauseChronometer();
     }
 
-    public void addBtn(JButton btn, String comand, ActionListener listener, Insets insets){
-        btn.setText(comand);
-        btn.setActionCommand(comand);
-        btn.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
-        btn.setForeground(Color.WHITE);
-        btn.setContentAreaFilled(false);
-        btn.setBorderPainted(false);
-        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btn.setMargin(insets);
-        btn.setFocusPainted(false);
-        btn.setFocusable(false);
-        btn.setUI(new ShapedButtonProfile(new Color(0x230443)));
-        btn.addActionListener(listener);
-        this.add(btn);
+    public void addBtn(String comand, Insets insets){
+        btnPlay.setText(comand);
+        btnPlay.setActionCommand(comand);
+        btnPlay.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+        btnPlay.setForeground(Color.WHITE);
+        btnPlay.setContentAreaFilled(false);
+        btnPlay.setBorderPainted(false);
+        btnPlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnPlay.setMargin(insets);
+        btnPlay.setFocusPainted(false);
+        btnPlay.setFocusable(false);
+        btnPlay.setUI(new ShapedButtonProfile(new Color(0x230443)));
+        repaint();
     }
 
 }

@@ -100,7 +100,7 @@ public class ManagerModel implements ContractPlay.Model {
             public void run() {
                 while(presenter.isGameWorking()) {
                     verifyPositions();
-                    MyUtils.sleep(25);
+                    MyUtils.sleep(50);
                 }
             }
         });
