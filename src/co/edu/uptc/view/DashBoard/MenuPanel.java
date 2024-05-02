@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import co.edu.uptc.Utils.Values;
@@ -18,6 +19,9 @@ public class MenuPanel extends JPanel {
     private ImageIcon imgPlay;
     private ImageIcon imgPause;
     private Chronometer chronometer;
+    private JLabel lblDeletedMartians;
+    private JLabel lblActiveMartians;
+    private ImageIcon imgDeletedMartians;
 
     public MenuPanel(ActionListener listener) {
         initComponents(listener);
@@ -35,6 +39,19 @@ public class MenuPanel extends JPanel {
 
        chronometer = new Chronometer(listener);
        add(chronometer);
+
+       lblActiveMartians = new JLabel();
+       lblActiveMartians.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+       lblActiveMartians.setForeground(new Color(0x230443));
+       updateActiveMartians(0);
+       add(lblActiveMartians);
+
+       imgDeletedMartians = new ImageIcon(getClass().getResource(Values.pathImgDeletedMartians));
+       lblDeletedMartians = new JLabel();
+       lblDeletedMartians.setIcon(imgDeletedMartians);
+       lblDeletedMartians.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+       updateDeletedMartians(0);
+       add(lblDeletedMartians);
 
        this.setBackground(new Color(0x55ddff));
     }
@@ -60,6 +77,13 @@ public class MenuPanel extends JPanel {
 
     public void pauseChronometer(){
         chronometer.pauseChronometer();
+    }
+
+    public void updateDeletedMartians(int deletedMartians){
+        lblDeletedMartians.setText("Deleted Martians: "+deletedMartians);
+    }
+    public void updateActiveMartians(int activeMartians){
+        lblActiveMartians.setText("Martians: "+activeMartians);
     }
 
     public void addBtn(String comand, Insets insets){

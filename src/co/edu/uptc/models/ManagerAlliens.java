@@ -48,6 +48,7 @@ public class ManagerAlliens {
     public void left(){
         if(element.getX()-width/2<=0){
             element.setActive(false);
+            // element.setY(element.getY()+element.getHeight());
             // direction = DirectionEnum.RIGHT;
         }
         element.setX(element.getX()-width/3);
@@ -55,6 +56,7 @@ public class ManagerAlliens {
     public void right(){
         if(element.getX()+width/2>=Values.widthWindow){
             element.setActive(false);
+            // element.setY(element.getY()+element.getHeight());
             // direction = DirectionEnum.LEFT;
         }
         element.setX(element.getX()+width/3);

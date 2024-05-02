@@ -112,6 +112,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         workPanel.movePaceCraft(presenter.getManagerPacecraft().getPacecraft());
         workPanel.shoot(presenter.getBullets());
         workPanel.repaint();
+        menuPanel.updateActiveMartians(presenter.getActiveMartians());
         notifyAll();
     }
 
@@ -138,6 +139,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         presenter.shoot();
         if(presenter.isGameWorking()){
             sounds.playSoundShoot();
+            menuPanel.updateDeletedMartians(presenter.getDeletedMartians());
         }
     }
 

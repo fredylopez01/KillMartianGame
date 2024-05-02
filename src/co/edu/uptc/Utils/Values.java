@@ -35,4 +35,5 @@ public class Values {
     public static String pathImgPacecraft5 = AdminProperties.read("pathImgPacecraft5");
     public static String pathImgBullet1 = AdminProperties.read("pathImgBullet1");
     public static String pathImgBullet2 = AdminProperties.read("pathImgBullet2");
+    public static String pathImgDeletedMartians = AdminProperties.read("pathImgDeletedMartians");
 }

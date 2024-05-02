@@ -17,6 +17,8 @@ public class ContractPlay {
         public ArrayList<Element> getElements();
         public ManagerPacecraft getManagerPacecraft();
         public ArrayList<Element> getBullets();
+        public int getDeletedMartians();
+        public int getActiveMartians();
     }
 
     public interface View {
@@ -40,5 +42,7 @@ public class ContractPlay {
         public boolean isGameWorking();
         public void setIsGameWorking(boolean isGameWorking);
         public void setPainted(boolean isPainted);
+        public int getDeletedMartians();
+        public int getActiveMartians();
     }
 }

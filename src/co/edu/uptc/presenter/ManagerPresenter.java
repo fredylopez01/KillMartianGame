@@ -85,5 +85,12 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     public void setIsGameWorking(boolean isGameWorking) {
         this.isGameWorking = isGameWorking;
     }
-    
+    @Override
+    public int getDeletedMartians() {
+        return model.getDeletedMartians();
+    }
+    @Override
+    public int getActiveMartians() {
+        return model.getActiveMartians();
+    }
 }

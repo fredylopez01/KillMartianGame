@@ -14,11 +14,13 @@ public class ManagerModel implements ContractPlay.Model {
     private ArrayList<ManagerAlliens> managerElements;
     private ManagerPacecraft managerPacecraft;
     private ArrayList<ManagerBullets> managerBullets;
+    private int deletedMartians;
 
     public ManagerModel(){
         managerElements = new ArrayList<>();
         managerPacecraft = new ManagerPacecraft();
         managerBullets = new ArrayList<>();
+        deletedMartians = 0;
     }
 
     @Override
@@ -112,6 +114,7 @@ public class ManagerModel implements ContractPlay.Model {
                 if(isBurst(managerBullet, managerAllien)){
                     managerAllien.getElement().setActive(false);
                     // managerAllien.getElement().setType(6);
+                    deletedMartians++;
                     Sounds sounds = new Sounds();
                     sounds.playSoundBurst();
                     managerBullet.getElement().setActive(false);
@@ -164,5 +167,20 @@ public class ManagerModel implements ContractPlay.Model {
     public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
     }
-
+    @Override
+    public int getDeletedMartians() {
+        return deletedMartians;
+    }
+    @Override
+    public int getActiveMartians(){
+        int activeMartians = 0;
+        if(presenter.isGameWorking()){
+            for (ManagerAlliens manaAlliens : managerElements) {
+                if(manaAlliens.getElement().isActive()){
+                    activeMartians++;
+                }
+            }
+        }
+        return activeMartians;
+    }
 }
