@@ -18,18 +18,15 @@ public class Sounds {
     public void playSoundShoot(){
         soundShoot = new Sound(SoundFiles.loadClip(Values.pathSoundShoot));
         soundShoot.play();
-        soundShoot.changeVolume(-30);
     }
 
     public void playSoundBurst(){
         soundBurst = new Sound(SoundFiles.loadClip(Values.pathSoundBurst));
         soundBurst.play();
-        soundBurst.changeVolume(6);
     }
 
     public void playSoundBackground() {
         soundBackground.loop();
-        soundBackground.changeVolume(-20);
     }
 
     

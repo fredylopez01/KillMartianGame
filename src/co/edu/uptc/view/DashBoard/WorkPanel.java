@@ -57,16 +57,14 @@ public class WorkPanel extends JPanel {
         }
     }
     private void paintPaceCraft(Graphics g) {
-        if(pacecraft.getDx() != 0){
-            g.drawImage(
+        g.drawImage(
             new ImageIcon(getClass().getResource(typePacecraft(pacecraft.getType()))).getImage(),
             pacecraft.getDx(), 
             this.getHeight()-pacecraft.getHeight(),
             pacecraft.getWidth(), 
             pacecraft.getHeight(), 
             this
-            );
-        }
+        );
     }
     public void paintBullets(Graphics g){
         for (Element bullet : bullets) {

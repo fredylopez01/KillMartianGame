@@ -19,13 +19,13 @@ public class ManagerPacecraft {
     }
 
     public void right(){
-        if(pacecraft.getDx()+10<Values.widthWindow-10 && statusThread){
+        if(pacecraft.getDx()+pacecraft.getWidth()<Values.widthWindow-10 && statusThread){
             pacecraft.setDx(pacecraft.getDx()+10);
         }
     }
 
     public void left(){
-        if(pacecraft.getDx()-10>0 && statusThread){
+        if(pacecraft.getDx()>0 && statusThread){
             pacecraft.setDx(pacecraft.getDx()-10);
         }
     }

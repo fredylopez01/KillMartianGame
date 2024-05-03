@@ -15,6 +15,7 @@ public class ManagerModel implements ContractPlay.Model {
     private ManagerPacecraft managerPacecraft;
     private ArrayList<ManagerBullets> managerBullets;
     private int deletedMartians;
+    Sounds sounds = new Sounds();
 
     public ManagerModel(){
         managerElements = new ArrayList<>();
@@ -113,9 +114,7 @@ public class ManagerModel implements ContractPlay.Model {
             for (ManagerAlliens managerAllien : managerElements) {
                 if(isBurst(managerBullet, managerAllien)){
                     managerAllien.getElement().setActive(false);
-                    // managerAllien.getElement().setType(6);
                     deletedMartians++;
-                    Sounds sounds = new Sounds();
                     sounds.playSoundBurst();
                     managerBullet.getElement().setActive(false);
                 }

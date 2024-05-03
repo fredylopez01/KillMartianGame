@@ -113,6 +113,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         workPanel.shoot(presenter.getBullets());
         workPanel.repaint();
         menuPanel.updateActiveMartians(presenter.getActiveMartians());
+        menuPanel.updateDeletedMartians(presenter.getDeletedMartians());
         notifyAll();
     }
 
@@ -130,7 +131,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
             presenter.getManagerPacecraft().right();
         } 
-        if(key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE){
+        if(key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE || key == KeyEvent.VK_UP){
             shoot();
         }
     }
@@ -139,7 +140,6 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         presenter.shoot();
         if(presenter.isGameWorking()){
             sounds.playSoundShoot();
-            menuPanel.updateDeletedMartians(presenter.getDeletedMartians());
         }
     }
 
