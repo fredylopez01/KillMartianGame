@@ -1,7 +1,5 @@
 package co.edu.uptc.Utils;
 
-import co.edu.uptc.config.AdminProperties;
-
 public class Values {
     public static int widthWindow = Integer.valueOf(AdminProperties.read("widthWindow"));
     public static int heightWindow = Integer.valueOf(AdminProperties.read("heightWindow"));
@@ -22,6 +20,8 @@ public class Values {
     public static String pathImgPlay = AdminProperties.read("pathImgPlay");
     public static String pathImgResume = AdminProperties.read("pathImgResume");
     public static String pathImgChronometer = AdminProperties.read("pathImgChronometer");
+    public static String pathImgExit = AdminProperties.read("pathImgExit");
+    public static String pathImgBackgroundMain = AdminProperties.read("pathImgBackgroundMain");
     public static String pathImgBackground = AdminProperties.read("pathImgBackground");
     public static String pathImgMartian1 = AdminProperties.read("pathImgMartian1");
     public static String pathImgMartian2 = AdminProperties.read("pathImgMartian2");

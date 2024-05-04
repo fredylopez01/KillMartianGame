@@ -1,16 +1,16 @@
 package co.edu.uptc.models;
 
 import co.edu.uptc.Utils.Values;
+import co.edu.uptc.pojos.DirectionEnum;
 import co.edu.uptc.pojos.Element;
-import co.edu.uptc.view.DashBoard.DirectionEnum;
 
-public class ManagerAlliens {
+public class ManagerAllien {
     private Element element;
     private DirectionEnum direction;
     public boolean statusThread;
     private int width;
 
-    public ManagerAlliens(){
+    public ManagerAllien(){
         createElement();
         direction();
         statusThread = true;

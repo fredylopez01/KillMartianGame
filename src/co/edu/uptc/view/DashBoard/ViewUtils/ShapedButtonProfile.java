@@ -20,7 +20,7 @@ public class ShapedButtonProfile extends BasicButtonUI {
 	public void paint(Graphics g, JComponent c) {
 	Graphics2D g2d = (Graphics2D) g;
 	Shape buttonShape = null;
-	buttonShape = new RoundRectangle2D.Double(0, 0, c.getWidth(), c.getHeight(), 20, 20);
+	buttonShape = new RoundRectangle2D.Double(0, 0, c.getWidth(), c.getHeight(), 10, 10);
 	g2d.setPaint(background);
 	g2d.fill(buttonShape);
 	super.paint(g2d, c);

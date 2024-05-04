@@ -3,11 +3,11 @@ package co.edu.uptc.models;
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.Element;
 
-public class ManagerBullets {
+public class ManagerBullet {
     private Element element;
     public boolean statusThread;
     
-    public ManagerBullets(int x){
+    public ManagerBullet(int x){
         createElement(x);
         statusThread = true;
     }

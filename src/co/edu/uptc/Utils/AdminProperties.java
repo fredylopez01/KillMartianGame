@@ -1,4 +1,4 @@
-package co.edu.uptc.config;
+package co.edu.uptc.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

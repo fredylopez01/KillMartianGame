@@ -1,4 +1,4 @@
-package co.edu.uptc.view.DashBoard;
+package co.edu.uptc.pojos;
 
 public enum DirectionEnum {
     LEFT, RIGHT, DOWN, UP,

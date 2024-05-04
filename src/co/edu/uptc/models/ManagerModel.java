@@ -11,9 +11,9 @@ import co.edu.uptc.view.DashBoard.ViewUtils.Sounds;
 
 public class ManagerModel implements ContractPlay.Model {
     public ContractPlay.Presenter presenter;
-    private ArrayList<ManagerAlliens> managerElements;
+    private ArrayList<ManagerAllien> managerElements;
     private ManagerPacecraft managerPacecraft;
-    private ArrayList<ManagerBullets> managerBullets;
+    private ArrayList<ManagerBullet> managerBullets;
     private int deletedMartians;
     Sounds sounds = new Sounds();
 
@@ -38,7 +38,7 @@ public class ManagerModel implements ContractPlay.Model {
         thread.start();
     }
     public synchronized void addAllien() {
-        ManagerAlliens managerElement = new ManagerAlliens();
+        ManagerAllien managerElement = new ManagerAllien();
         managerElement.bigMove();
         managerElements.add(managerElement);
     }
@@ -46,7 +46,7 @@ public class ManagerModel implements ContractPlay.Model {
     public void start(){
         moveAlliens();
         managerPacecraft.setStatusThread(true);
-        for (ManagerBullets managerBullet : managerBullets) {
+        for (ManagerBullet managerBullet : managerBullets) {
             managerBullet.bigMove();
         }
     }
@@ -59,28 +59,28 @@ public class ManagerModel implements ContractPlay.Model {
             }
         }
         presenter.setPainted(false);
-        for (ManagerAlliens managerAllien : managerElements) {
+        for (ManagerAllien managerAllien : managerElements) {
             managerAllien.bigMove();
         }
         notifyAll();
     }
     @Override
     public void resume(){
-        for (ManagerAlliens managerElement : managerElements) {
+        for (ManagerAllien managerElement : managerElements) {
             managerElement.statusThread = true;
         }
         managerPacecraft.setStatusThread(true);
-        for (ManagerBullets managerBullet : managerBullets) {
+        for (ManagerBullet managerBullet : managerBullets) {
             managerBullet.statusThread = true;
         }
     }
     @Override
     public void stop(){
-        for (ManagerAlliens managerElement : managerElements) {
+        for (ManagerAllien managerElement : managerElements) {
             managerElement.statusThread = false;
         }
         managerPacecraft.setStatusThread(false);
-        for (ManagerBullets managerBullet : managerBullets) {
+        for (ManagerBullet managerBullet : managerBullets) {
             managerBullet.statusThread = false;
         }
     }
@@ -88,8 +88,8 @@ public class ManagerModel implements ContractPlay.Model {
     public synchronized void shoot(){
         if(presenter.isGameWorking()){
             int x = this.managerPacecraft.getPacecraft().getDx();
-            ManagerBullets managerBullet = new ManagerBullets(x+5);
-            ManagerBullets managerBullet1 = new ManagerBullets(x+85);
+            ManagerBullet managerBullet = new ManagerBullet(x+5);
+            ManagerBullet managerBullet1 = new ManagerBullet(x+85);
             managerBullet.bigMove();
             managerBullet1.bigMove();
             managerBullets.add(managerBullet);
@@ -103,15 +103,15 @@ public class ManagerModel implements ContractPlay.Model {
             public void run() {
                 while(presenter.isGameWorking()) {
                     verifyPositions();
-                    MyUtils.sleep(50);
+                    MyUtils.sleep(102);
                 }
             }
         });
         thread.start();
     }
     public synchronized void verifyPositions(){
-        for (ManagerBullets managerBullet : managerBullets) {
-            for (ManagerAlliens managerAllien : managerElements) {
+        for (ManagerBullet managerBullet : managerBullets) {
+            for (ManagerAllien managerAllien : managerElements) {
                 if(isBurst(managerBullet, managerAllien)){
                     managerAllien.getElement().setActive(false);
                     deletedMartians++;
@@ -121,7 +121,7 @@ public class ManagerModel implements ContractPlay.Model {
             }
         }
     }
-    public boolean isBurst(ManagerBullets bullet, ManagerAlliens allien){
+    public boolean isBurst(ManagerBullet bullet, ManagerAllien allien){
         boolean isBoom = false;
         Element b = bullet.getElement();
         Element a = allien.getElement();
@@ -134,9 +134,9 @@ public class ManagerModel implements ContractPlay.Model {
         return isBoom;
     }
     @Override
-    public ArrayList<Element> getElements(){
+    public synchronized ArrayList<Element> getElements(){
         ArrayList<Element> elements = new ArrayList<>();
-        for (ManagerAlliens managerElement : managerElements) {
+        for (ManagerAllien managerElement : managerElements) {
             elements.add(managerElement.getElement());
         }
         return elements;
@@ -152,7 +152,7 @@ public class ManagerModel implements ContractPlay.Model {
         }
         presenter.setPainted(false);
         ArrayList<Element> bullets = new ArrayList<>();
-        for (ManagerBullets managerBullet : managerBullets) {
+        for (ManagerBullet managerBullet : managerBullets) {
             bullets.add(managerBullet.getElement());
         }
         notifyAll();
@@ -174,7 +174,7 @@ public class ManagerModel implements ContractPlay.Model {
     public int getActiveMartians(){
         int activeMartians = 0;
         if(presenter.isGameWorking()){
-            for (ManagerAlliens manaAlliens : managerElements) {
+            for (ManagerAllien manaAlliens : managerElements) {
                 if(manaAlliens.getElement().isActive()){
                     activeMartians++;
                 }

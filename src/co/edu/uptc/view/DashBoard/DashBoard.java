@@ -9,6 +9,7 @@ import co.edu.uptc.presenter.ContractPlay.Presenter;
 import co.edu.uptc.view.DashBoard.ViewUtils.Sounds;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,27 +18,21 @@ import java.awt.event.KeyListener;
 public class DashBoard extends JFrame implements ActionListener, KeyListener, ContractPlay.View {
     private ImageIcon icon;
     private ContractPlay.Presenter presenter;
-    private MenuPanel menuPanel;
-    private WorkPanel workPanel;
     private Sounds sounds;
+    private ManagerPanels managerPanels;
+    private CardLayout layoutMainPanel;
 
     public DashBoard(){
         initComponents();
     }
-
-    private DashBoard getInstance(){
-        return this;
-    }
-
     private void initComponents() {
         setBounds(0, 0, Values.widthWindow, Values.heightWindow);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
-        menuPanel = new MenuPanel(getInstance());
-        this.add(menuPanel, BorderLayout.NORTH);
-        workPanel = new WorkPanel();
-        this.add(workPanel, BorderLayout.CENTER);
+        managerPanels = new ManagerPanels(this);
+        this.add(managerPanels, BorderLayout.CENTER);
+        layoutMainPanel = (CardLayout) managerPanels.getLayout();
         sounds = new Sounds();
         this.setTitle("Martian Eliminator");
         icon = new ImageIcon(getClass().getResource(Values.pathImgIcon));
@@ -48,27 +43,27 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     public void run(){
         setVisible(true);
     }
-
-    public void setWorkPanel(WorkPanel workPanel) {
-        this.workPanel = workPanel;
-    }
     @Override
     public void actionPerformed(ActionEvent e) {
         String comand = e.getActionCommand();
         switch (comand) {
-            case "Play" -> start();
+            case "begin" -> start();
+            case "exit" -> System.exit(0);
+            case "Resume" -> start();
             case "Pause" -> stop();
-            case "chronometer" -> menuPanel.updateChronometer();
+            case "abandon" -> abandon();
+            case "chronometer" -> managerPanels.getPlayPanel().updateChronometer();
             default -> System.out.println(comand);
         }
     }
     public void start(){
         if(!presenter.isGameWorking()){
+            layoutMainPanel.show(managerPanels, "play");
             presenter.setIsGameWorking(true);
             presenter.start();
             sounds.playSoundBackground();
-            menuPanel.initChronometer();
-            menuPanel.changButton(presenter.isGameWorking());
+            managerPanels.getPlayPanel().initChronometer();
+            managerPanels.getPlayPanel().changeButton(presenter.isGameWorking());
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -85,19 +80,17 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
             presenter.setIsGameWorking(false);
             presenter.stop();
             sounds.stopSoundBackground();
-            menuPanel.pauseChronometer();
-            menuPanel.changButton(presenter.isGameWorking());
+            managerPanels.getPlayPanel().pauseChronometer();
+            managerPanels.getPlayPanel().changeButton(presenter.isGameWorking());
         }
+    }
+    public void abandon(){
+        stop();
+        layoutMainPanel.show(managerPanels, "begin");
     }
     @Override
     public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
-    }
-    public MenuPanel getMenuPanel() {
-        return menuPanel;
-    }
-    public WorkPanel getWorkPanel() {
-        return workPanel;
     }
     public synchronized void repaintComponents(){
         while (presenter.isPainted()) {
@@ -108,12 +101,12 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
             }
         }
         presenter.setPainted(true);
-        workPanel.start(presenter.getElements());
-        workPanel.movePaceCraft(presenter.getManagerPacecraft().getPacecraft());
-        workPanel.shoot(presenter.getBullets());
-        workPanel.repaint();
-        menuPanel.updateActiveMartians(presenter.getActiveMartians());
-        menuPanel.updateDeletedMartians(presenter.getDeletedMartians());
+        managerPanels.getPlayPanel().start(presenter.getElements());
+        managerPanels.getPlayPanel().movePaceCraft(presenter.getManagerPacecraft().getPacecraft());
+        managerPanels.getPlayPanel().shoot(presenter.getBullets());
+        managerPanels.getPlayPanel().repaintPlay();
+        managerPanels.getPlayPanel().updateActiveMartians(presenter.getActiveMartians());
+        managerPanels.getPlayPanel().updateDeletedMartians(presenter.getDeletedMartians());
         notifyAll();
     }
 
@@ -147,5 +140,4 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     public void keyReleased(KeyEvent e) {
         
     }
-
 }

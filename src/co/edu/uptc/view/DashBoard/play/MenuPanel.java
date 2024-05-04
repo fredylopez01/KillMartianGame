@@ -1,4 +1,4 @@
-package co.edu.uptc.view.DashBoard;
+package co.edu.uptc.view.DashBoard.play;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -12,12 +12,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import co.edu.uptc.Utils.Values;
+import co.edu.uptc.view.DashBoard.Chronometer;
 import co.edu.uptc.view.DashBoard.ViewUtils.ShapedButtonProfile;
 
 public class MenuPanel extends JPanel {
     private JButton btnPlay;
     private ImageIcon imgPlay;
     private ImageIcon imgPause;
+    private JButton btnAbandon;
+    private ImageIcon imgAbandon;
+    private Insets insetsBtn;
     private Chronometer chronometer;
     private JLabel lblDeletedMartians;
     private JLabel lblActiveMartians;
@@ -29,13 +33,13 @@ public class MenuPanel extends JPanel {
 
     private void initComponents(ActionListener listener) {
        setBounds(100, 100, 100, 50);
+       insetsBtn = new Insets(2, 6, 2, 6);
 
        imgPlay = new ImageIcon(getClass().getResource(Values.pathImgPlay));
        imgPause = new ImageIcon(getClass().getResource(Values.pathImgResume));
        btnPlay = new JButton();
-       btnPlay.addActionListener(listener);
-       changButton(false);
-       this.add(btnPlay);
+       styleBtn(btnPlay, insetsBtn, listener);
+       changeButton(false);
 
        chronometer = new Chronometer(listener);
        add(chronometer);
@@ -53,16 +57,20 @@ public class MenuPanel extends JPanel {
        updateDeletedMartians(0);
        add(lblDeletedMartians);
 
+       imgAbandon = new ImageIcon(getClass().getResource(Values.pathImgExit));
+       btnAbandon = new JButton();
+       btnAbandon.setIcon(imgAbandon);
+       btnAbandon.setActionCommand("abandon");
+       styleBtn(btnAbandon, insetsBtn, listener);
+
        this.setBackground(new Color(0x55ddff));
     }
 
-    public void changButton(boolean isGameWorking){
+    public void changeButton(boolean isGameWorking){
         if(isGameWorking){
-            btnPlay.setIcon(imgPause);
-            addBtn("Pause", new Insets(2, 6, 2, 6));
+            changeComand(btnPlay, "Pause", imgPause);
         } else{
-            btnPlay.setIcon(imgPlay);
-            addBtn("Play", new Insets(2, 6, 2, 6));
+            changeComand(btnPlay,"Resume", imgPlay);
         }
     }
 
@@ -86,19 +94,25 @@ public class MenuPanel extends JPanel {
         lblActiveMartians.setText("Martians: "+activeMartians);
     }
 
-    public void addBtn(String comand, Insets insets){
-        btnPlay.setText(comand);
-        btnPlay.setActionCommand(comand);
-        btnPlay.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
-        btnPlay.setForeground(Color.WHITE);
-        btnPlay.setContentAreaFilled(false);
-        btnPlay.setBorderPainted(false);
-        btnPlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnPlay.setMargin(insets);
-        btnPlay.setFocusPainted(false);
-        btnPlay.setFocusable(false);
-        btnPlay.setUI(new ShapedButtonProfile(new Color(0x230443)));
-        repaint();
+    public void styleBtn(JButton btn, Insets insets, ActionListener listener){
+        btn.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
+        btn.setForeground(Color.WHITE);
+        btn.setContentAreaFilled(false);
+        btn.setBorderPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setMargin(insets);
+        btn.setFocusPainted(false);
+        btn.setFocusable(false);
+        btn.setUI(new ShapedButtonProfile(new Color(0x230443)));
+        btn.addActionListener(listener);
+        this.add(btn);
+    }
+
+    public void changeComand(JButton btn, String comand, ImageIcon icon){
+        btn.setIcon(icon);
+        btn.setText(comand);
+        btn.setActionCommand(comand);
+        btn.repaint();
     }
 
 }

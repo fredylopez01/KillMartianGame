@@ -1,4 +1,4 @@
-package co.edu.uptc.view.DashBoard;
+package co.edu.uptc.view.DashBoard.play;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -10,12 +10,12 @@ import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.Element;
 import co.edu.uptc.pojos.Pacecraft;
 
-public class WorkPanel extends JPanel {
+public class PlayPanel extends JPanel {
     private ArrayList<Element> alliens;
     private Pacecraft pacecraft;
     private ArrayList<Element> bullets;
     
-    public WorkPanel(){
+    public PlayPanel(){
         initComponents();
     }
 
@@ -34,7 +34,7 @@ public class WorkPanel extends JPanel {
     public void shoot(ArrayList<Element> bullets){
         this.bullets = bullets;
     }
-	
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
         g.drawImage(new ImageIcon(getClass().getResource(Values.pathImgBackground)).getImage(),0, 0,this.getWidth(), this.getHeight(), this);
