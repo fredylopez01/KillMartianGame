@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class AdminProperties {
-    public static String routeProperties = "src\\co\\edu\\uptc\\config\\config.properties";
+    public static String routeProperties = "config\\config.properties";
 
     public static String read(String property){
         Properties propertiesFile = new Properties();

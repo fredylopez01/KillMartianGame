@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import co.edu.uptc.Utils.Values;
-import co.edu.uptc.view.DashBoard.Chronometer;
 import co.edu.uptc.view.DashBoard.ViewUtils.ShapedButtonProfile;
 
 public class MenuPanel extends JPanel {
@@ -86,7 +85,9 @@ public class MenuPanel extends JPanel {
     public void pauseChronometer(){
         chronometer.pauseChronometer();
     }
-
+    public void restartChronometer(){
+        chronometer.restartChronometer();
+    }
     public void updateDeletedMartians(int deletedMartians){
         lblDeletedMartians.setText("Deleted Martians: "+deletedMartians);
     }

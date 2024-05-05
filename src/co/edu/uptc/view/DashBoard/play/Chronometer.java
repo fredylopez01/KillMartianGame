@@ -1,4 +1,4 @@
-package co.edu.uptc.view.DashBoard;
+package co.edu.uptc.view.DashBoard.play;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -58,5 +58,11 @@ public class Chronometer extends JPanel {
 
     public void pauseChronometer(){
         timer.stop();
+    }
+
+    public void restartChronometer(){
+        hours = 0;
+        minuts = 0;
+        seconds = -1;
     }
 }

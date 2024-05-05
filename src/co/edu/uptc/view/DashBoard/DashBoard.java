@@ -21,6 +21,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     private Sounds sounds;
     private ManagerPanels managerPanels;
     private CardLayout layoutMainPanel;
+    private int keyToShoot;
 
     public DashBoard(){
         initComponents();
@@ -38,6 +39,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         icon = new ImageIcon(getClass().getResource(Values.pathImgIcon));
 		setIconImage(icon.getImage());
         this.addKeyListener(this);
+        keyToShoot = KeyEvent.VK_ENTER;
     }
 
     public void run(){
@@ -48,10 +50,14 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         String comand = e.getActionCommand();
         switch (comand) {
             case "begin" -> start();
+            case "settings" -> managerPanels.getBeginPanel().panelSettings();
             case "exit" -> System.exit(0);
             case "Resume" -> start();
             case "Pause" -> stop();
             case "abandon" -> abandon();
+            case "keyUp" -> changeKeyToShoot(KeyEvent.VK_UP);
+            case "keySpace" -> changeKeyToShoot(KeyEvent.VK_SPACE);
+            case "keyEnter" -> changeKeyToShoot(KeyEvent.VK_ENTER);
             case "chronometer" -> managerPanels.getPlayPanel().updateChronometer();
             default -> System.out.println(comand);
         }
@@ -86,7 +92,14 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     }
     public void abandon(){
         stop();
+        managerPanels.getPlayPanel().restartChronometer();
+        managerPanels.getPlayPanel().updateChronometer();
         layoutMainPanel.show(managerPanels, "begin");
+        presenter.restartGame();
+    }
+    public void changeKeyToShoot(int keyToShoot){
+        this.keyToShoot = keyToShoot;
+        managerPanels.getBeginPanel().panelBegin();
     }
     @Override
     public void setPresenter(Presenter presenter) {
@@ -124,7 +137,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
             presenter.getManagerPacecraft().right();
         } 
-        if(key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE || key == KeyEvent.VK_UP){
+        if(key == keyToShoot){
             shoot();
         }
     }

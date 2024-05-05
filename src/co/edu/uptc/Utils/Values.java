@@ -36,4 +36,7 @@ public class Values {
     public static String pathImgBullet1 = AdminProperties.read("pathImgBullet1");
     public static String pathImgBullet2 = AdminProperties.read("pathImgBullet2");
     public static String pathImgDeletedMartians = AdminProperties.read("pathImgDeletedMartians");
+    public static String pathImgUp = AdminProperties.read("pathImgUp");
+    public static String pathImgSpace = AdminProperties.read("pathImgSpace");
+    public static String pathImgEnter = AdminProperties.read("pathImgEnter");
 }

@@ -142,6 +142,12 @@ public class ManagerModel implements ContractPlay.Model {
         return elements;
     }
     @Override
+    public void restartGame() {
+        managerElements = new ArrayList<>();
+        managerBullets = new ArrayList<>();
+        deletedMartians = 0;
+    }
+    @Override
     public synchronized ArrayList<Element> getBullets(){
         while (!presenter.isPainted()) {
             try {

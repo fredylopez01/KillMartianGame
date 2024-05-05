@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 
 public class BeginPanel extends JPanel {
     private JButton btnPlay;
+    private JButton btnSettings;
     private JButton btnExit;
 
     public BeginPanel(ActionListener listener){
@@ -28,12 +29,17 @@ public class BeginPanel extends JPanel {
         this.setBorder(new EmptyBorder(new Insets(50, 100, 50, 100)));
 
         btnPlay = new JButton("JUGAR");
-        styleButton(btnPlay, new Insets(10, 30, 10, 30));
+        styleButton(btnPlay, new Insets(10, 40, 10, 40));
         btnPlay.setActionCommand("begin");
         btnPlay.addActionListener(listener);
 
+        btnSettings = new JButton("AJUSTES");
+        styleButton(btnSettings, new Insets(10, 30, 10, 30));
+        btnSettings.setActionCommand("settings");
+        btnSettings.addActionListener(listener);
+
         btnExit = new JButton("SALIR");
-        styleButton(btnExit, new Insets(10, 30, 10, 30));
+        styleButton(btnExit, new Insets(10, 44, 10, 44));
         btnExit.setActionCommand("exit");
         btnExit.addActionListener(listener);
         addComponents();
@@ -43,10 +49,13 @@ public class BeginPanel extends JPanel {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        gbc.insets = new Insets(20, 0, 20, 0);
+        gbc.insets = new Insets(10, 0, 10, 0);
         this.add(btnPlay, gbc);
 
         gbc.gridy = 1;
+        this.add(btnSettings, gbc);
+
+        gbc.gridy = 2;
         this.add(btnExit, gbc);
     }
 

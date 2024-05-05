@@ -62,6 +62,10 @@ public class ManagerPresenter implements ContractPlay.Presenter {
         return model.getElements();
     }
     @Override
+    public void restartGame() {
+        model.restartGame();
+    }
+    @Override
     public ManagerPacecraft getManagerPacecraft() {
         return model.getManagerPacecraft();
     }

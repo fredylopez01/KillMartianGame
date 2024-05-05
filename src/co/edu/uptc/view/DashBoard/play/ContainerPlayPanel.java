@@ -35,6 +35,9 @@ public class ContainerPlayPanel extends JPanel {
     public void pauseChronometer(){
         menuPanel.pauseChronometer();
     }
+    public void restartChronometer(){
+        menuPanel.restartChronometer();
+    }
     public void updateDeletedMartians(int deletedMartians){
         menuPanel.updateDeletedMartians(deletedMartians);
     }

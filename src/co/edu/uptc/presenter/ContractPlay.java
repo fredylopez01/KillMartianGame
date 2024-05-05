@@ -15,6 +15,7 @@ public class ContractPlay {
         public void threadVerifyPositions();
         public void shoot();
         public ArrayList<Element> getElements();
+        public void restartGame();
         public ManagerPacecraft getManagerPacecraft();
         public ArrayList<Element> getBullets();
         public int getDeletedMartians();
@@ -35,6 +36,7 @@ public class ContractPlay {
         public void stop();
         public void shoot();
         public ArrayList<Element> getElements();
+        public void restartGame();
         public ManagerPacecraft getManagerPacecraft();
         public ArrayList<Element> getBullets();
 
