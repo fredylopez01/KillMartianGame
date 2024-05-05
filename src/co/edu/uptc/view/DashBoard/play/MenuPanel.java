@@ -21,7 +21,7 @@ public class MenuPanel extends JPanel {
     private JButton btnAbandon;
     private ImageIcon imgAbandon;
     private Insets insetsBtn;
-    private Chronometer chronometer;
+    private MyChronometer chronometer;
     private JLabel lblDeletedMartians;
     private JLabel lblActiveMartians;
     private ImageIcon imgDeletedMartians;
@@ -40,7 +40,7 @@ public class MenuPanel extends JPanel {
        styleBtn(btnPlay, insetsBtn, listener);
        changeButton(false);
 
-       chronometer = new Chronometer(listener);
+       chronometer = new MyChronometer(listener);
        add(chronometer);
 
        lblActiveMartians = new JLabel();

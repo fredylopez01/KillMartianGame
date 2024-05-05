@@ -10,7 +10,7 @@ import javax.swing.Timer;
 
 import co.edu.uptc.Utils.Values;
 
-public class Chronometer extends JPanel {
+public class MyChronometer extends JPanel {
     private Timer timer;
     private JLabel lblChronometer;
     private ImageIcon imgChronometer;
@@ -18,7 +18,7 @@ public class Chronometer extends JPanel {
     private int minuts;
     private int seconds;
 
-    public Chronometer(ActionListener listener){
+    public MyChronometer(ActionListener listener){
         initComponents(listener);
     }
 
