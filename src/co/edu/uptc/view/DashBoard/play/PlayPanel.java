@@ -11,7 +11,7 @@ import co.edu.uptc.pojos.Element;
 import co.edu.uptc.pojos.Pacecraft;
 
 public class PlayPanel extends JPanel {
-    private ArrayList<Element> alliens;
+    private ArrayList<Element> aliens;
     private Pacecraft pacecraft;
     private ArrayList<Element> bullets;
     
@@ -20,13 +20,13 @@ public class PlayPanel extends JPanel {
     }
 
     private void initComponents(){
-        this.alliens = new ArrayList<>();
+        this.aliens = new ArrayList<>();
         this.pacecraft = new Pacecraft();
         this.bullets = new ArrayList<>();
     }
 
-    public void start(ArrayList<Element> alliens){
-        this.alliens = alliens;
+    public void start(ArrayList<Element> aliens){
+        this.aliens = aliens;
     }
     public void movePaceCraft(Pacecraft pacecraft){
         this.pacecraft = pacecraft;
@@ -38,19 +38,19 @@ public class PlayPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
         g.drawImage(new ImageIcon(getClass().getResource(Values.pathImgBackground)).getImage(),0, 0,this.getWidth(), this.getHeight(), this);
-        paintAlliens(g);
+        paintAliens(g);
         paintPaceCraft(g);
         paintBullets(g);
 	}
-    public void paintAlliens(Graphics g){
-        for (Element allien : alliens) {
-            if(allien.isActive()){
+    public void paintAliens(Graphics g){
+        for (Element alien : aliens) {
+            if(alien.isActive()){
                 g.drawImage(
-                    new ImageIcon(getClass().getResource(typeAllien(allien.getType()))).getImage(),
-                    allien.getX(), 
-                    allien.getY(),
-                    allien.getWidth(), 
-                    allien.getHeight(), 
+                    new ImageIcon(getClass().getResource(typeAlien(alien.getType()))).getImage(),
+                    alien.getX(), 
+                    alien.getY(),
+                    alien.getWidth(), 
+                    alien.getHeight(), 
                     this
                 );
             }
@@ -79,17 +79,17 @@ public class PlayPanel extends JPanel {
             }
         }
     }
-    public String typeAllien(int type){
-        String allien = null;
+    public String typeAlien(int type){
+        String alien = null;
         switch (type) {
-            case 0 -> allien = Values.pathImgMartian1;
-            case 1 -> allien = Values.pathImgMartian2;
-            case 3 -> allien = Values.pathImgMartian3;
-            case 4 -> allien = Values.pathImgMartian4;
-            case 6 -> allien = Values.pathImgBurst;
-            default -> allien = Values.pathImgMartian4;
+            case 0 -> alien = Values.pathImgMartian1;
+            case 1 -> alien = Values.pathImgMartian2;
+            case 3 -> alien = Values.pathImgMartian3;
+            case 4 -> alien = Values.pathImgMartian4;
+            case 6 -> alien = Values.pathImgBurst;
+            default -> alien = Values.pathImgMartian4;
         }
-        return allien;
+        return alien;
     }
 
     public String typePacecraft(int type){
@@ -98,6 +98,7 @@ public class PlayPanel extends JPanel {
             case 0 -> pacecraft = Values.pathImgPacecraft1;
             case 1 -> pacecraft = Values.pathImgPacecraft2;
             case 2 -> pacecraft= Values.pathImgPacecraft3;
+            case 3 -> pacecraft = Values.pathImgPacecraft4;
             default -> pacecraft = Values.pathImgPacecraft4;
         }
         return pacecraft;

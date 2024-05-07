@@ -35,23 +35,23 @@ public class SelectControls extends JPanel {
 
     private void initComponents(ActionListener listener){
         this.setUI(new ShapedPanelLoginUI(new Color(85, 221, 255, 180)));
-        this.setBorder(new EmptyBorder(new Insets(50, 100, 50, 100)));
+        this.setBorder(new EmptyBorder(new Insets(50, 80, 50, 80)));
 
-        statement = new JLabel("Toque la tecla que quiera usar para disparar: ");
+        statement = new JLabel("Tap the image of the key you want to use to shoot: ");
         statement.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
         statement.setForeground(new Color(0x544D66));
 
         imgKeyUp = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgUp)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         btnKeyUp = new JButton(imgKeyUp);
-        styleButton(btnKeyUp, listener, "keyUp");
+        styleButton(btnKeyUp, listener, "keyUp", new Color(0xFEF0B1));
         
         imgKeySpace = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgSpace)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         btnKeySpace = new JButton(imgKeySpace);
-        styleButton(btnKeySpace, listener, "keySpace");
+        styleButton(btnKeySpace, listener, "keySpace", new Color(0xFEF0B1));
         
         imgKeyEnter = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgEnter)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         btnKeyEnter = new JButton(imgKeyEnter);
-        styleButton(btnKeyEnter, listener, "keyEnter");
+        styleButton(btnKeyEnter, listener, "keyEnter", new Color(0xFEF0B1));
     }
     
     private void addComponents() {
@@ -72,7 +72,7 @@ public class SelectControls extends JPanel {
     	gbc.gridx = 2;
     	this.add(btnKeyEnter, gbc);
     }
-    private void styleButton(JButton btn, ActionListener listener, String comand){
+    protected static void styleButton(JButton btn, ActionListener listener, String comand, Color color){
         btn.addActionListener(listener);
         btn.setActionCommand(comand);
         btn.setContentAreaFilled(false);
@@ -80,6 +80,6 @@ public class SelectControls extends JPanel {
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btn.setFocusPainted(false);
         btn.setFocusable(false);
-        btn.setUI(new ShapedButtonProfile(new Color(0xFEF0B1)));
+        btn.setUI(new ShapedButtonProfile(color));
     }
 }

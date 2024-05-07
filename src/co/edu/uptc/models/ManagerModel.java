@@ -11,7 +11,7 @@ import co.edu.uptc.view.DashBoard.ViewUtils.Sounds;
 
 public class ManagerModel implements ContractPlay.Model {
     public ContractPlay.Presenter presenter;
-    private ArrayList<ManagerAllien> managerElements;
+    private ArrayList<ManagerAlien> managerElements;
     private ManagerPacecraft managerPacecraft;
     private ArrayList<ManagerBullet> managerBullets;
     private int deletedMartians;
@@ -23,34 +23,33 @@ public class ManagerModel implements ContractPlay.Model {
         managerBullets = new ArrayList<>();
         deletedMartians = 0;
     }
-
     @Override
-    public void addAlliens(){
+    public void addAliens(){
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(presenter.isGameWorking()) {
-                    addAllien();
+                    addAlien();
                     MyUtils.sleep((int)(Math.random()*(Values.maxSpeedTimeAdd-Values.minSpeedTimeAdd+1)+Values.minSpeedTimeAdd));
                 }
             }
         });
         thread.start();
     }
-    public synchronized void addAllien() {
-        ManagerAllien managerElement = new ManagerAllien();
+    public synchronized void addAlien() {
+        ManagerAlien managerElement = new ManagerAlien();
         managerElement.bigMove();
         managerElements.add(managerElement);
     }
     @Override
     public void start(){
-        moveAlliens();
+        moveAliens();
         managerPacecraft.setStatusThread(true);
         for (ManagerBullet managerBullet : managerBullets) {
             managerBullet.bigMove();
         }
     }
-    public synchronized void moveAlliens(){
+    public synchronized void moveAliens(){
         while (!presenter.isPainted()) {
             try {
                 wait();
@@ -59,14 +58,14 @@ public class ManagerModel implements ContractPlay.Model {
             }
         }
         presenter.setPainted(false);
-        for (ManagerAllien managerAllien : managerElements) {
-            managerAllien.bigMove();
+        for (ManagerAlien managerAlien : managerElements) {
+            managerAlien.bigMove();
         }
         notifyAll();
     }
     @Override
     public void resume(){
-        for (ManagerAllien managerElement : managerElements) {
+        for (ManagerAlien managerElement : managerElements) {
             managerElement.statusThread = true;
         }
         managerPacecraft.setStatusThread(true);
@@ -76,7 +75,7 @@ public class ManagerModel implements ContractPlay.Model {
     }
     @Override
     public void stop(){
-        for (ManagerAllien managerElement : managerElements) {
+        for (ManagerAlien managerElement : managerElements) {
             managerElement.statusThread = false;
         }
         managerPacecraft.setStatusThread(false);
@@ -87,14 +86,25 @@ public class ManagerModel implements ContractPlay.Model {
     @Override
     public synchronized void shoot(){
         if(presenter.isGameWorking()){
-            int x = this.managerPacecraft.getPacecraft().getDx();
-            ManagerBullet managerBullet = new ManagerBullet(x+5);
-            ManagerBullet managerBullet1 = new ManagerBullet(x+85);
+            ManagerBullet managerBullet = new ManagerBullet(positionBullet(1));
+            ManagerBullet managerBullet1 = new ManagerBullet(positionBullet(2));
             managerBullet.bigMove();
             managerBullet1.bigMove();
             managerBullets.add(managerBullet);
             managerBullets.add(managerBullet1);
         }
+    }
+    public  int positionBullet(int idBullet){
+        int position = 0;
+        int x = this.managerPacecraft.getPacecraft().getDx();
+        int typePacecraft = managerPacecraft.getPacecraft().getType();
+            if(typePacecraft == 0 || typePacecraft == 1){
+                if(idBullet == 1) position = x+5;
+                else position = x+85;
+            } else if(typePacecraft == 2 || typePacecraft == 3){
+                position= x+45;
+            } 
+        return position;
     }
     @Override
     public void threadVerifyPositions(){
@@ -111,9 +121,9 @@ public class ManagerModel implements ContractPlay.Model {
     }
     public synchronized void verifyPositions(){
         for (ManagerBullet managerBullet : managerBullets) {
-            for (ManagerAllien managerAllien : managerElements) {
-                if(isBurst(managerBullet, managerAllien)){
-                    managerAllien.getElement().setActive(false);
+            for (ManagerAlien managerAlien : managerElements) {
+                if(isBurst(managerBullet, managerAlien)){
+                    managerAlien.getElement().setActive(false);
                     deletedMartians++;
                     sounds.playSoundBurst();
                     managerBullet.getElement().setActive(false);
@@ -121,10 +131,10 @@ public class ManagerModel implements ContractPlay.Model {
             }
         }
     }
-    public boolean isBurst(ManagerBullet bullet, ManagerAllien allien){
+    public boolean isBurst(ManagerBullet bullet, ManagerAlien alien){
         boolean isBoom = false;
         Element b = bullet.getElement();
-        Element a = allien.getElement();
+        Element a = alien.getElement();
         if(b.isActive() && a.isActive()){
             if(b.getX()>=a.getX() && b.getX()<a.getX()+a.getWidth()
                 && b.getY()>=a.getY() && b.getY()<a.getY()+a.getHeight()){
@@ -136,7 +146,7 @@ public class ManagerModel implements ContractPlay.Model {
     @Override
     public synchronized ArrayList<Element> getElements(){
         ArrayList<Element> elements = new ArrayList<>();
-        for (ManagerAllien managerElement : managerElements) {
+        for (ManagerAlien managerElement : managerElements) {
             elements.add(managerElement.getElement());
         }
         return elements;
@@ -180,12 +190,16 @@ public class ManagerModel implements ContractPlay.Model {
     public int getActiveMartians(){
         int activeMartians = 0;
         if(presenter.isGameWorking()){
-            for (ManagerAllien manaAlliens : managerElements) {
-                if(manaAlliens.getElement().isActive()){
+            for (ManagerAlien manaAliens : managerElements) {
+                if(manaAliens.getElement().isActive()){
                     activeMartians++;
                 }
             }
         }
         return activeMartians;
+    }
+    @Override
+    public void setTypePacecraft(int type){
+        managerPacecraft.getPacecraft().setType(type);
     }
 }

@@ -42,7 +42,7 @@ public class ManagerPresenter implements ContractPlay.Presenter {
 
     @Override
     public void start() {
-        model.addAlliens();
+        model.addAliens();
         model.resume();
         isPainted = true;
         model.start();
@@ -96,5 +96,9 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     @Override
     public int getActiveMartians() {
         return model.getActiveMartians();
+    }
+    @Override
+    public void setTypePacecraft(int type) {
+        model.setTypePacecraft(type);
     }
 }

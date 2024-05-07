@@ -11,7 +11,7 @@ public class ContractPlay {
         public void start();
         public void resume();
         public void stop();
-        public void addAlliens();
+        public void addAliens();
         public void threadVerifyPositions();
         public void shoot();
         public ArrayList<Element> getElements();
@@ -20,6 +20,7 @@ public class ContractPlay {
         public ArrayList<Element> getBullets();
         public int getDeletedMartians();
         public int getActiveMartians();
+        public void setTypePacecraft(int type);
     }
 
     public interface View {
@@ -46,5 +47,6 @@ public class ContractPlay {
         public void setPainted(boolean isPainted);
         public int getDeletedMartians();
         public int getActiveMartians();
+        public void setTypePacecraft(int type);
     }
 }

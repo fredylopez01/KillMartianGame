@@ -4,13 +4,13 @@ import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.DirectionEnum;
 import co.edu.uptc.pojos.Element;
 
-public class ManagerAllien {
+public class ManagerAlien {
     private Element element;
     private DirectionEnum direction;
     public boolean statusThread;
     private int width;
 
-    public ManagerAllien(){
+    public ManagerAlien(){
         createElement();
         direction();
         statusThread = true;

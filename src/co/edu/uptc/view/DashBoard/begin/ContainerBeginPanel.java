@@ -50,6 +50,9 @@ public class ContainerBeginPanel extends JPanel {
     public void panelBegin(){
         layoutManager.show(adminPanels, "beginPanel");
     }
+    public void panelSelectPacecraft(){
+        layoutManager.show(adminPanels, "selectShip");
+    }
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponents(g);

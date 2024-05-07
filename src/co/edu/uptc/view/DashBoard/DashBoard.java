@@ -58,6 +58,10 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
             case "keyUp" -> changeKeyToShoot(KeyEvent.VK_UP);
             case "keySpace" -> changeKeyToShoot(KeyEvent.VK_SPACE);
             case "keyEnter" -> changeKeyToShoot(KeyEvent.VK_ENTER);
+            case "pacecraft1" -> selectShip(0);
+            case "pacecraft2" -> selectShip(1);
+            case "pacecraft3" -> selectShip(2);
+            case "pacecraft4" -> selectShip(3);
             case "chronometer" -> managerPanels.getPlayPanel().updateChronometer();
             default -> System.out.println(comand);
         }
@@ -99,6 +103,10 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     }
     public void changeKeyToShoot(int keyToShoot){
         this.keyToShoot = keyToShoot;
+        managerPanels.getBeginPanel().panelSelectPacecraft();;
+    }
+    public void selectShip(int type){
+        presenter.setTypePacecraft(type);
         managerPanels.getBeginPanel().panelBegin();
     }
     @Override

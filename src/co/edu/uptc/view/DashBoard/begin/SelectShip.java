@@ -11,7 +11,7 @@ import co.edu.uptc.Utils.Values;
 import co.edu.uptc.view.DashBoard.ViewUtils.ShapedPanelLoginUI;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -27,7 +27,6 @@ public class SelectShip extends JPanel{
     private Icon imgShipThree;
     private JButton shipFour;
     private Icon imgShipFour;
-    private JButton btnSelectShip;
 
     public SelectShip(ActionListener listener){
         initComponents(listener);
@@ -36,33 +35,39 @@ public class SelectShip extends JPanel{
 
     private void initComponents(ActionListener listener){
         this.setUI(new ShapedPanelLoginUI(new Color(85, 221, 255, 180)));
-        this.setBorder(new EmptyBorder(new Insets(50, 100, 50, 100)));
+        this.setBorder(new EmptyBorder(new Insets(50, 70, 50, 70)));
 
-        statement = new JLabel("Seleccione la nave");
+        statement = new JLabel("Select the ship");
+        statement.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
+        statement.setForeground(new Color(0x544D66));
 
         imgShipOne = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgPacecraft1)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         shipOne = new JButton(imgShipOne);
-        shipOne.setPreferredSize(new Dimension(Values.lengthPaceCraft, Values.lengthPaceCraft));
+        shipOne.setMargin(new Insets(1, 1, 1, 1));
+        SelectControls.styleButton(shipOne, listener, "pacecraft1", Color.WHITE);
         
         imgShipTwo = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgPacecraft2)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         shipTwo = new JButton(imgShipTwo);
-        shipTwo.setPreferredSize(new Dimension(Values.lengthPaceCraft, Values.lengthPaceCraft));
+        shipTwo.setMargin(new Insets(1, 1, 1, 1));
+        SelectControls.styleButton(shipTwo, listener, "pacecraft2", Color.WHITE);
         
         imgShipThree = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgPacecraft3)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         shipThree = new JButton(imgShipThree);
-        shipThree.setPreferredSize(new Dimension(Values.lengthPaceCraft, Values.lengthPaceCraft));
+        shipThree.setMargin(new Insets(1, 1, 1, 1));
+        SelectControls.styleButton(shipThree, listener, "pacecraft3", Color.WHITE);
         
         imgShipFour = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgPacecraft4)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         shipFour = new JButton(imgShipFour);
-        shipFour.setPreferredSize(new Dimension(Values.lengthPaceCraft, Values.lengthPaceCraft));
+        shipFour.setMargin(new Insets(1, 1, 1, 1));
+        SelectControls.styleButton(shipFour, listener, "pacecraft4", Color.WHITE);
         
-        btnSelectShip = new JButton("Seleccionar");
     }
     
     private void addComponents() {
     	this.setLayout(new GridBagLayout());
     	GridBagConstraints gbc = new GridBagConstraints();
     	
+        gbc.insets = new Insets(10, 8, 10, 8);
     	gbc.gridwidth = 4;
     	this.add(statement, gbc);
     	
@@ -78,10 +83,5 @@ public class SelectShip extends JPanel{
     	
     	gbc.gridx = 3;
     	this.add(shipFour, gbc);
-    	
-    	gbc.gridy = 2;
-    	gbc.gridx = 1;
-    	gbc.gridwidth = 2;
-    	this.add(btnSelectShip, gbc);
     }
 }
