@@ -17,6 +17,7 @@ public class MyChronometer extends JPanel {
     private int hours;
     private int minuts;
     private int seconds;
+    private int secondsValue;
 
     public MyChronometer(ActionListener listener){
         initComponents(listener);
@@ -28,6 +29,7 @@ public class MyChronometer extends JPanel {
         hours = 0;
         minuts = 0;
         seconds = 0;
+        secondsValue = 0;
 
         lblChronometer = new JLabel(hours+"h:"+minuts+"m:"+seconds+"s");
         imgChronometer = new ImageIcon(getClass().getResource(Values.pathImgChronometer));
@@ -38,18 +40,13 @@ public class MyChronometer extends JPanel {
 
     public void updateTime(){
         seconds++;
-        if(seconds==60){
-            seconds=0;
-            minuts++;
-        }
-        if(minuts==60){
-            minuts=0;
-            hours++;
-        }
+        hours = seconds/3600;
+        minuts = (seconds%3600)/60;
+        secondsValue = ((seconds%3600)%60);
     }
 
     public void updateLabel(){
-        lblChronometer.setText(hours+"h:"+minuts+"m:"+seconds+"s");
+        lblChronometer.setText(hours+"h:"+minuts+"m:"+secondsValue+"s");
     }
 
     public void initChronometer(){
@@ -61,8 +58,7 @@ public class MyChronometer extends JPanel {
     }
 
     public void restartChronometer(){
-        hours = 0;
-        minuts = 0;
+        timer.restart();
         seconds = -1;
     }
 }
