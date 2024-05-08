@@ -34,8 +34,8 @@ public class MenuPanel extends JPanel {
        setBounds(100, 100, 100, 50);
        insetsBtn = new Insets(2, 6, 2, 6);
 
-       imgPlay = new ImageIcon(getClass().getResource(Values.pathImgPlay));
-       imgPause = new ImageIcon(getClass().getResource(Values.pathImgResume));
+       imgPlay = (Values.adminImg.getImage("pathImgPlay"));
+       imgPause = (Values.adminImg.getImage("pathImgResume"));
        btnPlay = new JButton();
        styleBtn(btnPlay, insetsBtn, listener);
        changeButton(false);
@@ -49,14 +49,14 @@ public class MenuPanel extends JPanel {
        updateActiveMartians(0);
        add(lblActiveMartians);
 
-       imgDeletedMartians = new ImageIcon(getClass().getResource(Values.pathImgDeletedMartians));
+       imgDeletedMartians = (Values.adminImg.getImage("pathImgDeletedMartians"));
        lblDeletedMartians = new JLabel();
        lblDeletedMartians.setIcon(imgDeletedMartians);
        lblDeletedMartians.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
        updateDeletedMartians(0);
        add(lblDeletedMartians);
 
-       imgAbandon = new ImageIcon(getClass().getResource(Values.pathImgExit));
+       imgAbandon = (Values.adminImg.getImage("pathImgExit"));
        btnAbandon = new JButton();
        btnAbandon.setIcon(imgAbandon);
        btnAbandon.setActionCommand("abandon");

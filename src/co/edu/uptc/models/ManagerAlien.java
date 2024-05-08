@@ -1,5 +1,6 @@
 package co.edu.uptc.models;
 
+import co.edu.uptc.Utils.MyUtils;
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.DirectionEnum;
 import co.edu.uptc.pojos.Element;
@@ -8,7 +9,6 @@ public class ManagerAlien {
     private Element element;
     private DirectionEnum direction;
     public boolean statusThread;
-    private int width;
 
     public ManagerAlien(){
         createElement();
@@ -17,21 +17,29 @@ public class ManagerAlien {
     }
     public void createElement(){
         this.element = new Element();
-        this.element.setX((int)(Math.random()*Values.widthWindow));
-        this.element.setY((int)(Math.random()*Values.heightWindow/2));
-        width = (int)(Math.random()*(50-20)+20);
-        this.element.setWidth(50);
-        this.element.setHeight(50);
+        int length = (int)(Math.random()*(Values.maxLengthAlien-Values.minLengthAlien)+Values.minLengthAlien);
+        this.element.setWidth(length);
+        this.element.setHeight(length);
         this.element.setType((int)(Math.random()*5));
         this.element.setSpeed((int)(Math.random()*(Values.maxSpeedTime-Values.minSpeedTime+1)+Values.minSpeedTime));
         this.element.setActive(true);
     }
+    public void initialPositionRigth(){
+        this.element.setX(Values.widthWindow-element.getWidth());
+        this.element.setY((int)(Math.random()*Values.heightWindow/2));
+        changeDirection(DirectionEnum.LEFT);
+    }
+    public void initialPositionLeft(){
+        this.element.setX(0);
+        this.element.setY((int)(Math.random()*Values.heightWindow/2));
+        changeDirection(DirectionEnum.RIGHT);
+    }
     public void direction(){
         int directionR = (int)(Math.random()*(2)+1);
         switch (directionR) {
-            case 1 -> changeDirection(DirectionEnum.LEFT);
-            case 2 -> changeDirection(DirectionEnum.RIGHT);
-            default -> changeDirection(DirectionEnum.RIGHT);
+            case 1 -> initialPositionRigth();
+            case 2 -> initialPositionLeft();
+            default -> initialPositionLeft();
         }
     }
     private void changeDirection(DirectionEnum direction) {
@@ -46,16 +54,16 @@ public class ManagerAlien {
         }
     }
     public void left(){
-        if(element.getX()-width/2<=0-element.getWidth()){
+        if(element.getX()-element.getWidth()/2<=0-element.getWidth()){
             element.setActive(false);
         }
-        element.setX(element.getX()-width/3);
+        element.setX(element.getX()-element.getWidth()/3);
     }
     public void right(){
-        if(element.getX()+width/2>=Values.widthWindow){
+        if(element.getX()+element.getWidth()/2>=Values.widthWindow){
             element.setActive(false);
         }
-        element.setX(element.getX()+width/3);
+        element.setX(element.getX()+element.getWidth()/3);
     }
     public Element getElement(){
         return element;
@@ -76,5 +84,11 @@ public class ManagerAlien {
             }
         });
         thread.start();
+    }
+    public void impact(){
+        for (int i = 5; i < 9; i++) {
+            element.setType(i);
+            MyUtils.sleep(10);
+        }
     }
 }

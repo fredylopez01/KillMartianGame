@@ -15,13 +15,14 @@ public class ManagerModel implements ContractPlay.Model {
     private ManagerPacecraft managerPacecraft;
     private ArrayList<ManagerBullet> managerBullets;
     private int deletedMartians;
-    Sounds sounds = new Sounds();
+    Sounds sounds;
 
     public ManagerModel(){
         managerElements = new ArrayList<>();
         managerPacecraft = new ManagerPacecraft();
         managerBullets = new ArrayList<>();
         deletedMartians = 0;
+        sounds = new Sounds();
     }
     @Override
     public void addAliens(){
@@ -99,10 +100,10 @@ public class ManagerModel implements ContractPlay.Model {
         int x = this.managerPacecraft.getPacecraft().getDx();
         int typePacecraft = managerPacecraft.getPacecraft().getType();
             if(typePacecraft == 0 || typePacecraft == 1){
-                if(idBullet == 1) position = x+5;
-                else position = x+85;
+                if(idBullet == 1) position = x+4;
+                else position = x+65;
             } else if(typePacecraft == 2 || typePacecraft == 3){
-                position= x+45;
+                position= x+35;
             } 
         return position;
     }
@@ -123,10 +124,11 @@ public class ManagerModel implements ContractPlay.Model {
         for (ManagerBullet managerBullet : managerBullets) {
             for (ManagerAlien managerAlien : managerElements) {
                 if(isBurst(managerBullet, managerAlien)){
+                    managerBullet.getElement().setActive(false);
+                    managerAlien.impact();
                     managerAlien.getElement().setActive(false);
                     deletedMartians++;
                     sounds.playSoundBurst();
-                    managerBullet.getElement().setActive(false);
                 }
             }
         }
@@ -188,15 +190,7 @@ public class ManagerModel implements ContractPlay.Model {
     }
     @Override
     public int getActiveMartians(){
-        int activeMartians = 0;
-        if(presenter.isGameWorking()){
-            for (ManagerAlien manaAliens : managerElements) {
-                if(manaAliens.getElement().isActive()){
-                    activeMartians++;
-                }
-            }
-        }
-        return activeMartians;
+        return managerElements.size();
     }
     @Override
     public void setTypePacecraft(int type){

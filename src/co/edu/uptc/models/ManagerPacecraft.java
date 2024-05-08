@@ -15,7 +15,7 @@ public class ManagerPacecraft {
         pacecraft.setWidth(Values.lengthPaceCraft);
         pacecraft.setHeight(Values.lengthPaceCraft);
         pacecraft.setDx(Values.widthWindow/2-pacecraft.getWidth()/2);
-        pacecraft.setType(0);
+        pacecraft.setType(2);
     }
 
     public void right(){

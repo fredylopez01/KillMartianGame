@@ -3,6 +3,7 @@ package co.edu.uptc.view.DashBoard;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import co.edu.uptc.Utils.AdminProperties;
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.presenter.ContractPlay;
 import co.edu.uptc.presenter.ContractPlay.Presenter;
@@ -12,6 +13,8 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -36,9 +39,10 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         layoutMainPanel = (CardLayout) managerPanels.getLayout();
         sounds = new Sounds();
         this.setTitle("Martian Eliminator");
-        icon = new ImageIcon(getClass().getResource(Values.pathImgIcon));
+        icon = (Values.adminImg.getImage("pathImgIcon"));
 		setIconImage(icon.getImage());
         this.addKeyListener(this);
+        addListenerWindow();
         keyToShoot = KeyEvent.VK_ENTER;
     }
 
@@ -160,5 +164,16 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     @Override
     public void keyReleased(KeyEvent e) {
         
+    }
+
+    public void addListenerWindow(){
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                AdminProperties.write("widthWindow", String.valueOf(e.getComponent().getWidth()));
+                AdminProperties.write("heightWindow", String.valueOf(e.getComponent().getHeight()));
+            }
+        });
     }
 }

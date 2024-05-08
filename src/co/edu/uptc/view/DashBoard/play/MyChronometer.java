@@ -32,7 +32,7 @@ public class MyChronometer extends JPanel {
         secondsValue = 0;
 
         lblChronometer = new JLabel(hours+"h:"+minuts+"m:"+seconds+"s");
-        imgChronometer = new ImageIcon(getClass().getResource(Values.pathImgChronometer));
+        imgChronometer = (Values.adminImg.getImage("pathImgChronometer"));
         lblChronometer.setIcon(imgChronometer);
         lblChronometer.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         this.add(lblChronometer);

@@ -41,22 +41,22 @@ public class SelectShip extends JPanel{
         statement.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
         statement.setForeground(new Color(0x544D66));
 
-        imgShipOne = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgPacecraft1)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
+        imgShipOne = new ImageIcon((Values.adminImg.getImage("pathImgPacecraft1")).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         shipOne = new JButton(imgShipOne);
         shipOne.setMargin(new Insets(1, 1, 1, 1));
         SelectControls.styleButton(shipOne, listener, "pacecraft1", Color.WHITE);
         
-        imgShipTwo = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgPacecraft2)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
+        imgShipTwo = new ImageIcon((Values.adminImg.getImage("pathImgPacecraft2")).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         shipTwo = new JButton(imgShipTwo);
         shipTwo.setMargin(new Insets(1, 1, 1, 1));
         SelectControls.styleButton(shipTwo, listener, "pacecraft2", Color.WHITE);
         
-        imgShipThree = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgPacecraft3)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
+        imgShipThree = new ImageIcon((Values.adminImg.getImage("pathImgPacecraft3")).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         shipThree = new JButton(imgShipThree);
         shipThree.setMargin(new Insets(1, 1, 1, 1));
         SelectControls.styleButton(shipThree, listener, "pacecraft3", Color.WHITE);
         
-        imgShipFour = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgPacecraft4)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
+        imgShipFour = new ImageIcon((Values.adminImg.getImage("pathImgPacecraft4")).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         shipFour = new JButton(imgShipFour);
         shipFour.setMargin(new Insets(1, 1, 1, 1));
         SelectControls.styleButton(shipFour, listener, "pacecraft4", Color.WHITE);

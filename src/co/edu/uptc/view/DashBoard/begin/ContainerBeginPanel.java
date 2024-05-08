@@ -7,7 +7,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import co.edu.uptc.Utils.Values;
@@ -56,6 +55,6 @@ public class ContainerBeginPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponents(g);
-        g.drawImage(new ImageIcon(getClass().getResource(Values.pathImgBackgroundMain)).getImage(),0, 0,this.getWidth(), this.getHeight(), this);
+        g.drawImage((Values.adminImg.getImage("pathImgBackgroundMain")).getImage(),0, 0,this.getWidth(), this.getHeight(), this);
     }
 }

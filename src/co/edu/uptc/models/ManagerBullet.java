@@ -14,7 +14,7 @@ public class ManagerBullet {
     public void createElement(int x){
         this.element = new Element();
         this.element.setX(x);
-        this.element.setY(Values.heightWindow-Values.lengthPaceCraft-60);
+        this.element.setY(Values.heightWindow-Values.lengthPaceCraft-70);
         this.element.setWidth(Values.lengthBullet);
         this.element.setHeight(Values.lengthBullet);
         this.element.setType(0);

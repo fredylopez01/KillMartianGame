@@ -41,15 +41,15 @@ public class SelectControls extends JPanel {
         statement.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
         statement.setForeground(new Color(0x544D66));
 
-        imgKeyUp = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgUp)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
+        imgKeyUp = new ImageIcon((Values.adminImg.getImage("pathImgUp")).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         btnKeyUp = new JButton(imgKeyUp);
         styleButton(btnKeyUp, listener, "keyUp", new Color(0xFEF0B1));
         
-        imgKeySpace = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgSpace)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
+        imgKeySpace = new ImageIcon((Values.adminImg.getImage("pathImgSpace")).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         btnKeySpace = new JButton(imgKeySpace);
         styleButton(btnKeySpace, listener, "keySpace", new Color(0xFEF0B1));
         
-        imgKeyEnter = new ImageIcon(new ImageIcon(getClass().getResource(Values.pathImgEnter)).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
+        imgKeyEnter = new ImageIcon((Values.adminImg.getImage("pathImgEnter")).getImage().getScaledInstance(Values.lengthPaceCraft, Values.lengthPaceCraft, 0));
         btnKeyEnter = new JButton(imgKeyEnter);
         styleButton(btnKeyEnter, listener, "keyEnter", new Color(0xFEF0B1));
     }

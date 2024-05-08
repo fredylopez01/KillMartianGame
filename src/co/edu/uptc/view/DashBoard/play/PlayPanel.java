@@ -37,7 +37,7 @@ public class PlayPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-        g.drawImage(new ImageIcon(getClass().getResource(Values.pathImgBackground)).getImage(),0, 0,this.getWidth(), this.getHeight(), this);
+        g.drawImage((Values.adminImg.getImage("pathImgBackground")).getImage(),0, 0,this.getWidth(), this.getHeight(), this);
         paintAliens(g);
         paintPaceCraft(g);
         paintBullets(g);
@@ -46,7 +46,7 @@ public class PlayPanel extends JPanel {
         for (Element alien : aliens) {
             if(alien.isActive()){
                 g.drawImage(
-                    new ImageIcon(getClass().getResource(typeAlien(alien.getType()))).getImage(),
+                    typeAlien(alien.getType()).getImage(),
                     alien.getX(), 
                     alien.getY(),
                     alien.getWidth(), 
@@ -58,7 +58,7 @@ public class PlayPanel extends JPanel {
     }
     private void paintPaceCraft(Graphics g) {
         g.drawImage(
-            new ImageIcon(getClass().getResource(typePacecraft(pacecraft.getType()))).getImage(),
+            typePacecraft(pacecraft.getType()).getImage(),
             pacecraft.getDx(), 
             this.getHeight()-pacecraft.getHeight(),
             pacecraft.getWidth(), 
@@ -70,7 +70,7 @@ public class PlayPanel extends JPanel {
         for (Element bullet : bullets) {
             if(bullet.isActive()){
                 g.drawImage(
-                    new ImageIcon(getClass().getResource(typeBullet(bullet.getType()))).getImage(),
+                    typeBullet(bullet.getType()).getImage(),
                     bullet.getX(), bullet.getY(),
                     bullet.getWidth(), 
                     bullet.getHeight(), 
@@ -79,37 +79,40 @@ public class PlayPanel extends JPanel {
             }
         }
     }
-    public String typeAlien(int type){
-        String alien = null;
+    public ImageIcon typeAlien(int type){
+        ImageIcon alien = null;
         switch (type) {
-            case 0 -> alien = Values.pathImgMartian1;
-            case 1 -> alien = Values.pathImgMartian2;
-            case 3 -> alien = Values.pathImgMartian3;
-            case 4 -> alien = Values.pathImgMartian4;
-            case 6 -> alien = Values.pathImgBurst;
-            default -> alien = Values.pathImgMartian4;
+            case 0 -> alien = (Values.adminImg.getImage("pathImgMartian1"));
+            case 1 -> alien = (Values.adminImg.getImage("pathImgMartian2"));
+            case 3 -> alien = (Values.adminImg.getImage("pathImgMartian3"));
+            case 4 -> alien = (Values.adminImg.getImage("pathImgMartian4"));
+            case 5 -> alien = (Values.adminImg.getImage("pathImgBurst1"));
+            case 6 -> alien = (Values.adminImg.getImage("pathImgBurst2"));
+            case 7 -> alien = (Values.adminImg.getImage("pathImgBurst3"));
+            case 8 -> alien = (Values.adminImg.getImage("pathImgBurst4"));
+            default -> alien = (Values.adminImg.getImage("pathImgMartian4"));
         }
         return alien;
     }
 
-    public String typePacecraft(int type){
-        String pacecraft = null;
+    public ImageIcon typePacecraft(int type){
+        ImageIcon pacecraft = null;
         switch (type) {
-            case 0 -> pacecraft = Values.pathImgPacecraft1;
-            case 1 -> pacecraft = Values.pathImgPacecraft2;
-            case 2 -> pacecraft= Values.pathImgPacecraft3;
-            case 3 -> pacecraft = Values.pathImgPacecraft4;
-            default -> pacecraft = Values.pathImgPacecraft4;
+            case 0 -> pacecraft = (Values.adminImg.getImage("pathImgPacecraft1"));
+            case 1 -> pacecraft = (Values.adminImg.getImage("pathImgPacecraft2"));
+            case 2 -> pacecraft= (Values.adminImg.getImage("pathImgPacecraft3"));
+            case 3 -> pacecraft = (Values.adminImg.getImage("pathImgPacecraft4"));
+            default -> pacecraft = (Values.adminImg.getImage("pathImgPacecraft4"));
         }
         return pacecraft;
     }
 
-    public String typeBullet(int type){
-        String pacecraft = null;
+    public ImageIcon typeBullet(int type){
+        ImageIcon pacecraft = null;
         switch (type) {
-            case 0 -> pacecraft = Values.pathImgBullet1;
-            case 1 -> pacecraft = Values.pathImgBullet2;
-            default -> pacecraft = Values.pathImgBullet1;
+            case 0 -> pacecraft = (Values.adminImg.getImage("pathImgBullet1"));
+            case 1 -> pacecraft = (Values.adminImg.getImage("pathImgBullet2"));
+            default -> pacecraft = (Values.adminImg.getImage("pathImgBullet1"));
         }
         return pacecraft;
     }
