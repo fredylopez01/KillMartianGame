@@ -15,6 +15,7 @@ public class ManagerModel implements ContractPlay.Model {
     private ManagerPacecraft managerPacecraft;
     private ArrayList<ManagerBullet> managerBullets;
     private int deletedMartians;
+    private int amountAlien;
     Sounds sounds;
 
     public ManagerModel(){
@@ -22,6 +23,7 @@ public class ManagerModel implements ContractPlay.Model {
         managerPacecraft = new ManagerPacecraft();
         managerBullets = new ArrayList<>();
         deletedMartians = 0;
+        amountAlien = 0;
         sounds = new Sounds();
     }
     @Override
@@ -38,31 +40,23 @@ public class ManagerModel implements ContractPlay.Model {
         thread.start();
     }
     public synchronized void addAlien() {
-        ManagerAlien managerElement = new ManagerAlien();
-        managerElement.bigMove();
-        managerElements.add(managerElement);
+        for (int i = 0; i < managerElements.size(); i++) {
+            if(!managerElements.get(i).getElement().isActive()){
+                ManagerAlien managerElement = new ManagerAlien();
+                managerElements.set(i, managerElement);
+                amountAlien++;
+            }
+            managerElements.get(i).move();
+        }
+        if(managerElements.size() < 10){
+            ManagerAlien managerElement = new ManagerAlien();
+            managerElements.add(managerElement);
+            amountAlien++;
+        }
     }
     @Override
-    public void start(){
-        moveAliens();
+    public synchronized void start(){
         managerPacecraft.setStatusThread(true);
-        for (ManagerBullet managerBullet : managerBullets) {
-            managerBullet.bigMove();
-        }
-    }
-    public synchronized void moveAliens(){
-        while (!presenter.isPainted()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        presenter.setPainted(false);
-        for (ManagerAlien managerAlien : managerElements) {
-            managerAlien.bigMove();
-        }
-        notifyAll();
     }
     @Override
     public void resume(){
@@ -85,15 +79,26 @@ public class ManagerModel implements ContractPlay.Model {
         }
     }
     @Override
-    public synchronized void shoot(){
+    public synchronized boolean shoot(){
         if(presenter.isGameWorking()){
-            ManagerBullet managerBullet = new ManagerBullet(positionBullet(1));
-            ManagerBullet managerBullet1 = new ManagerBullet(positionBullet(2));
-            managerBullet.bigMove();
-            managerBullet1.bigMove();
-            managerBullets.add(managerBullet);
-            managerBullets.add(managerBullet1);
+            for (int i = 0; i < 2; i++) {
+                if(managerBullets.size() < 2){
+                    ManagerBullet managerBullet = new ManagerBullet(positionBullet(1));
+                    ManagerBullet managerBullet1 = new ManagerBullet(positionBullet(2));
+                    managerBullets.add(managerBullet);
+                    managerBullets.add(managerBullet1);
+                    return true;
+                }
+                if (!managerBullets.get(i).getElement().isActive()) {
+                    ManagerBullet managerBullet = new ManagerBullet(positionBullet(1));
+                    ManagerBullet managerBullet1 = new ManagerBullet(positionBullet(2));
+                    managerBullets.set(i, managerBullet);
+                    managerBullets.set(i, managerBullet1);
+                    return true;
+                }
+            }
         }
+        return false;
     }
     public  int positionBullet(int idBullet){
         int position = 0;
@@ -113,35 +118,40 @@ public class ManagerModel implements ContractPlay.Model {
             @Override
             public void run() {
                 while(presenter.isGameWorking()) {
-                    verifyPositions();
-                    MyUtils.sleep(102);
+                    for (ManagerBullet managerBullet: managerBullets) {
+                        if(managerBullet.getElement().isActive()){
+                            if(verifyPositions(managerBullet)){
+                                managerBullet.getElement().setActive(false);
+                            }
+                            managerBullet.up();
+                        }
+                    }
+                    MyUtils.sleep(Values.speedBullet*2);
                 }
             }
         });
         thread.start();
     }
-    public synchronized void verifyPositions(){
-        for (ManagerBullet managerBullet : managerBullets) {
-            for (ManagerAlien managerAlien : managerElements) {
-                if(isBurst(managerBullet, managerAlien)){
-                    managerBullet.getElement().setActive(false);
-                    managerAlien.impact();
-                    managerAlien.getElement().setActive(false);
-                    deletedMartians++;
-                    sounds.playSoundBurst();
-                }
+    public synchronized boolean verifyPositions(ManagerBullet managerBullet){
+        boolean isBurst = false;
+        for (ManagerAlien managerAlien : managerElements) {
+            if(isBurst(managerBullet, managerAlien)){
+                isBurst = true;
+                managerAlien.impact();
+                managerAlien.stopThread();
+                deletedMartians++;
+                sounds.playSoundBurst();
             }
         }
+        return isBurst;
     }
     public boolean isBurst(ManagerBullet bullet, ManagerAlien alien){
         boolean isBoom = false;
         Element b = bullet.getElement();
         Element a = alien.getElement();
-        if(b.isActive() && a.isActive()){
-            if(b.getX()>=a.getX() && b.getX()<a.getX()+a.getWidth()
-                && b.getY()>=a.getY() && b.getY()<a.getY()+a.getHeight()){
-                isBoom = true;
-            }
+        if(b.getX()>=a.getX() && b.getX()<a.getX()+a.getWidth()
+            && b.getY()>=a.getY() && b.getY()<a.getY()+a.getHeight()){
+            isBoom = true;
         }
         return isBoom;
     }
@@ -158,22 +168,17 @@ public class ManagerModel implements ContractPlay.Model {
         managerElements = new ArrayList<>();
         managerBullets = new ArrayList<>();
         deletedMartians = 0;
+        amountAlien = 0;
     }
     @Override
     public synchronized ArrayList<Element> getBullets(){
-        while (!presenter.isPainted()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        presenter.setPainted(false);
         ArrayList<Element> bullets = new ArrayList<>();
         for (ManagerBullet managerBullet : managerBullets) {
-            bullets.add(managerBullet.getElement());
+            if(managerBullet.getElement().isActive()){
+                bullets.add(managerBullet.getElement());
+            }
         }
-        notifyAll();
+        
         return bullets;
     }
     @Override
@@ -190,7 +195,7 @@ public class ManagerModel implements ContractPlay.Model {
     }
     @Override
     public int getActiveMartians(){
-        return managerElements.size();
+        return amountAlien;
     }
     @Override
     public void setTypePacecraft(int type){

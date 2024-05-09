@@ -4,11 +4,13 @@ import co.edu.uptc.Utils.Values;
 
 public class Sounds {
     private Sound soundBackground;
+    private SoundFiles soundFilesBackground;
     private Sound soundShoot;
     private Sound soundBurst;
 
     public Sounds(){
-        soundBackground = new Sound(SoundFiles.loadClip(Values.pathSoundBackground));
+        soundFilesBackground = new SoundFiles(Values.pathSoundBackground);
+        soundBackground = new Sound(soundFilesBackground.getClip());
     }
 
     public void stopSoundBackground(){
@@ -16,12 +18,12 @@ public class Sounds {
     }
 
     public void playSoundShoot(){
-        soundShoot = new Sound(SoundFiles.loadClip(Values.pathSoundShoot));
+        soundShoot = new Sound(new SoundFiles(Values.pathSoundShoot).getClip());
         soundShoot.play();
     }
 
     public void playSoundBurst(){
-        soundBurst = new Sound(SoundFiles.loadClip(Values.pathSoundBurst));
+        soundBurst = new Sound(new SoundFiles(Values.pathSoundBurst).getClip());
         soundBurst.play();
     }
 

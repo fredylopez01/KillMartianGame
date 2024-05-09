@@ -25,24 +25,7 @@ public class ManagerBullet {
         if(element.getY()<=0){
             element.setActive(false);
         }
-        element.setY(element.getY()-element.getHeight()/3);
-    }
-    public void bigMove(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(statusThread  && element.isActive()) {
-                    up();
-                    try {
-                        Thread.sleep(element.getSpeed());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        System.out.println(e.getMessage());
-                    }
-                }
-            }
-        });
-        thread.start();
+        element.setY(element.getY()-element.getSpeed());
     }
     public Element getElement(){
         return element;

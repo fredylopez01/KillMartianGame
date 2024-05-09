@@ -13,7 +13,7 @@ public class ContractPlay {
         public void stop();
         public void addAliens();
         public void threadVerifyPositions();
-        public void shoot();
+        public boolean shoot();
         public ArrayList<Element> getElements();
         public void restartGame();
         public ManagerPacecraft getManagerPacecraft();
@@ -35,7 +35,7 @@ public class ContractPlay {
 
         public void start();
         public void stop();
-        public void shoot();
+        public boolean shoot();
         public ArrayList<Element> getElements();
         public void restartGame();
         public ManagerPacecraft getManagerPacecraft();

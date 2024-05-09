@@ -9,6 +9,7 @@ public class Sound {
         this.clip = clip;
     }
     public void play(){
+        clip.stop();
         clip.start();
     }
     public void loop(){

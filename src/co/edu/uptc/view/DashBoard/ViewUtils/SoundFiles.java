@@ -7,13 +7,13 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class SoundFiles {
-    private static Clip clip;
+    private Clip clip;
 
     public SoundFiles(String route){
         loadClip(route);
     }
 
-    public static Clip loadClip(String route){
+    public Clip loadClip(String route){
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(SoundFiles.class.getResource(route)));
@@ -33,4 +33,14 @@ public class SoundFiles {
     public void stop(){
         clip.stop();
     }
+
+    public Clip getClip() {
+        return clip;
+    }
+
+    public void setClip(Clip clip) {
+        this.clip = clip;
+    }
+
+    
 }

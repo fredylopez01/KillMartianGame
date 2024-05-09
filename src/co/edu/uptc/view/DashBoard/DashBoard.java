@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import co.edu.uptc.Utils.AdminProperties;
+import co.edu.uptc.Utils.MyUtils;
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.presenter.ContractPlay;
 import co.edu.uptc.presenter.ContractPlay.Presenter;
@@ -83,6 +84,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
                 public void run() {
                     while(presenter.isGameWorking()){
                         repaintComponents();
+                        MyUtils.sleep(10);
                     }
                 }
             });
@@ -118,21 +120,12 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
         this.presenter = presenter;
     }
     public synchronized void repaintComponents(){
-        while (presenter.isPainted()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        presenter.setPainted(true);
         managerPanels.getPlayPanel().start(presenter.getElements());
         managerPanels.getPlayPanel().movePaceCraft(presenter.getManagerPacecraft().getPacecraft());
         managerPanels.getPlayPanel().shoot(presenter.getBullets());
         managerPanels.getPlayPanel().repaintPlay();
         managerPanels.getPlayPanel().updateActiveMartians(presenter.getActiveMartians());
         managerPanels.getPlayPanel().updateDeletedMartians(presenter.getDeletedMartians());
-        notifyAll();
     }
 
     @Override
@@ -155,8 +148,7 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     }
 
     public void shoot(){
-        presenter.shoot();
-        if(presenter.isGameWorking()){
+        if(presenter.isGameWorking() && presenter.shoot()){
             sounds.playSoundShoot();
         }
     }

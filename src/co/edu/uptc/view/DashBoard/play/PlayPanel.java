@@ -44,16 +44,14 @@ public class PlayPanel extends JPanel {
 	}
     public void paintAliens(Graphics g){
         for (Element alien : aliens) {
-            if(alien.isActive()){
-                g.drawImage(
-                    typeAlien(alien.getType()).getImage(),
-                    alien.getX(), 
-                    alien.getY(),
-                    alien.getWidth(), 
-                    alien.getHeight(), 
-                    this
-                );
-            }
+            g.drawImage(
+                typeAlien(alien.getType()).getImage(),
+                alien.getX(), 
+                alien.getY(),
+                alien.getWidth(), 
+                alien.getHeight(), 
+                this
+            );
         }
     }
     private void paintPaceCraft(Graphics g) {
@@ -68,15 +66,13 @@ public class PlayPanel extends JPanel {
     }
     public void paintBullets(Graphics g){
         for (Element bullet : bullets) {
-            if(bullet.isActive()){
-                g.drawImage(
-                    typeBullet(bullet.getType()).getImage(),
-                    bullet.getX(), bullet.getY(),
-                    bullet.getWidth(), 
-                    bullet.getHeight(), 
-                    this
-                );
-            }
+            g.drawImage(
+                typeBullet(bullet.getType()).getImage(),
+                bullet.getX(), bullet.getY(),
+                bullet.getWidth(), 
+                bullet.getHeight(), 
+                this
+            );
         }
     }
     public ImageIcon typeAlien(int type){

@@ -55,40 +55,27 @@ public class ManagerAlien {
     }
     public void left(){
         if(element.getX()-element.getWidth()/2<=0-element.getWidth()){
-            element.setActive(false);
+            stopThread();
         }
-        element.setX(element.getX()-element.getWidth()/3);
+        element.setX(element.getX()-element.getSpeed());
     }
     public void right(){
         if(element.getX()+element.getWidth()/2>=Values.widthWindow){
-            element.setActive(false);
+            stopThread();
         }
-        element.setX(element.getX()+element.getWidth()/3);
+        element.setX(element.getX()+element.getSpeed());
+    }
+    public void stopThread(){
+        element.setActive(false);
+        statusThread = false;
     }
     public Element getElement(){
         return element;
     }
-    public void bigMove(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(statusThread && element.isActive()) {
-                    move();
-                    try {
-                        Thread.sleep(element.getSpeed());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        System.out.println(e.getMessage());
-                    }
-                }
-            }
-        });
-        thread.start();
-    }
     public void impact(){
         for (int i = 5; i < 9; i++) {
             element.setType(i);
-            MyUtils.sleep(10);
+            MyUtils.sleep(5);
         }
     }
 }
