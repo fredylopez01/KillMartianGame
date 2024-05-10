@@ -27,6 +27,10 @@ public class Sounds {
         soundBurst.play();
     }
 
+    public void stopSoundBurst(){
+        soundBurst.stop();
+    }
+
     public void playSoundBackground() {
         soundBackground.loop();
     }

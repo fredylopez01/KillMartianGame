@@ -65,17 +65,23 @@ public class ManagerAlien {
         }
         element.setX(element.getX()+element.getSpeed());
     }
+    public void impact(){
+        for (int i = 5; i < 9; i++) {
+            element.setType(i);
+            MyUtils.sleep(5);
+        }
+    }
+    public boolean isActive(){
+        return element.isActive();
+    }
+    public void setActive(boolean isActive){
+        element.setActive(isActive);
+    }
     public void stopThread(){
         element.setActive(false);
         statusThread = false;
     }
     public Element getElement(){
         return element;
-    }
-    public void impact(){
-        for (int i = 5; i < 9; i++) {
-            element.setType(i);
-            MyUtils.sleep(5);
-        }
     }
 }

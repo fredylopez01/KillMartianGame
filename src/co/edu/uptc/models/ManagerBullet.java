@@ -27,6 +27,16 @@ public class ManagerBullet {
         }
         element.setY(element.getY()-element.getSpeed());
     }
+    public boolean isActive(){
+        return element.isActive();
+    }
+    public void setActive(boolean isActive){
+        element.setActive(isActive);
+    }
+    public void stopThread(){
+        element.setActive(false);
+        statusThread = false;
+    }
     public Element getElement(){
         return element;
     }

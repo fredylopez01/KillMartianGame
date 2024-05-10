@@ -41,7 +41,7 @@ public class ManagerModel implements ContractPlay.Model {
     }
     public synchronized void addAlien() {
         for (int i = 0; i < managerElements.size(); i++) {
-            if(!managerElements.get(i).getElement().isActive()){
+            if(!managerElements.get(i).isActive()){
                 ManagerAlien managerElement = new ManagerAlien();
                 managerElements.set(i, managerElement);
                 amountAlien++;
@@ -53,6 +53,76 @@ public class ManagerModel implements ContractPlay.Model {
             managerElements.add(managerElement);
             amountAlien++;
         }
+    }
+    @Override
+    public void threadVerifyPositions(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(presenter.isGameWorking()) {
+                    for (ManagerBullet managerBullet: managerBullets) {
+                        if(managerBullet.isActive()){
+                            verifyPositions(managerBullet);
+                            managerBullet.up();
+                        }
+                    }
+                    MyUtils.sleep(Values.speedBullet*2);
+                }
+            }
+        });
+        thread.start();
+    }
+    public void verifyPositions(ManagerBullet managerBullet){
+        for (ManagerAlien managerAlien : managerElements) {
+            if(isBurst(managerBullet, managerAlien)){
+                efectImpact(managerAlien, managerBullet);
+            }
+        }
+    }
+    public boolean isBurst(ManagerBullet bullet, ManagerAlien alien){
+        boolean isBoom = false;
+        Element b = bullet.getElement();
+        Element a = alien.getElement();
+        if(b.getX()>=a.getX() && b.getX()<a.getX()+a.getWidth()
+            && b.getY()>=a.getY() && b.getY()<a.getY()+a.getHeight()){
+            isBoom = true;
+        }
+        return isBoom;
+    }
+    public void efectImpact(ManagerAlien managerAlien, ManagerBullet managerBullet){
+        sounds.playSoundBurst();
+        managerAlien.impact();
+        managerAlien.stopThread();
+        managerBullet.setActive(false);
+        deletedMartians++;
+        MyUtils.sleep(20);
+        sounds.stopSoundBurst();
+    }
+    @Override
+    public synchronized boolean shoot(){
+        if(presenter.isGameWorking()){
+            for (int i = 0; i < 2; i++) {
+                if(managerBullets.size() < 2){
+                    addFirstBullets(i);
+                    return true;
+                }
+                if(!managerBullets.get(i).isActive()) {
+                    addBullet(i);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public void addFirstBullets(int i){
+        int postion = MyUtils.positionBullet(i, managerPacecraft.getDx(), managerPacecraft.getType());
+        ManagerBullet managerBullet = new ManagerBullet(postion);
+        managerBullets.add(managerBullet);
+    }
+    public void addBullet(int i){
+        int postion = MyUtils.positionBullet(i, managerPacecraft.getDx(), managerPacecraft.getType());
+        ManagerBullet managerBullet = new ManagerBullet(postion);
+        managerBullets.set(i, managerBullet);
     }
     @Override
     public synchronized void start(){
@@ -79,81 +149,11 @@ public class ManagerModel implements ContractPlay.Model {
         }
     }
     @Override
-    public synchronized boolean shoot(){
-        if(presenter.isGameWorking()){
-            for (int i = 0; i < 2; i++) {
-                if(managerBullets.size() < 2){
-                    ManagerBullet managerBullet = new ManagerBullet(positionBullet(1));
-                    ManagerBullet managerBullet1 = new ManagerBullet(positionBullet(2));
-                    managerBullets.add(managerBullet);
-                    managerBullets.add(managerBullet1);
-                    return true;
-                }
-                if (!managerBullets.get(i).getElement().isActive()) {
-                    ManagerBullet managerBullet = new ManagerBullet(positionBullet(1));
-                    ManagerBullet managerBullet1 = new ManagerBullet(positionBullet(2));
-                    managerBullets.set(i, managerBullet);
-                    managerBullets.set(i, managerBullet1);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    public  int positionBullet(int idBullet){
-        int position = 0;
-        int x = this.managerPacecraft.getPacecraft().getDx();
-        int typePacecraft = managerPacecraft.getPacecraft().getType();
-            if(typePacecraft == 0 || typePacecraft == 1){
-                if(idBullet == 1) position = x+4;
-                else position = x+65;
-            } else if(typePacecraft == 2 || typePacecraft == 3){
-                position= x+35;
-            } 
-        return position;
-    }
-    @Override
-    public void threadVerifyPositions(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(presenter.isGameWorking()) {
-                    for (ManagerBullet managerBullet: managerBullets) {
-                        if(managerBullet.getElement().isActive()){
-                            if(verifyPositions(managerBullet)){
-                                managerBullet.getElement().setActive(false);
-                            }
-                            managerBullet.up();
-                        }
-                    }
-                    MyUtils.sleep(Values.speedBullet*2);
-                }
-            }
-        });
-        thread.start();
-    }
-    public synchronized boolean verifyPositions(ManagerBullet managerBullet){
-        boolean isBurst = false;
-        for (ManagerAlien managerAlien : managerElements) {
-            if(isBurst(managerBullet, managerAlien)){
-                isBurst = true;
-                managerAlien.impact();
-                managerAlien.stopThread();
-                deletedMartians++;
-                sounds.playSoundBurst();
-            }
-        }
-        return isBurst;
-    }
-    public boolean isBurst(ManagerBullet bullet, ManagerAlien alien){
-        boolean isBoom = false;
-        Element b = bullet.getElement();
-        Element a = alien.getElement();
-        if(b.getX()>=a.getX() && b.getX()<a.getX()+a.getWidth()
-            && b.getY()>=a.getY() && b.getY()<a.getY()+a.getHeight()){
-            isBoom = true;
-        }
-        return isBoom;
+    public void restartGame() {
+        managerElements = new ArrayList<>();
+        managerBullets = new ArrayList<>();
+        deletedMartians = 0;
+        amountAlien = 0;
     }
     @Override
     public synchronized ArrayList<Element> getElements(){
@@ -164,21 +164,13 @@ public class ManagerModel implements ContractPlay.Model {
         return elements;
     }
     @Override
-    public void restartGame() {
-        managerElements = new ArrayList<>();
-        managerBullets = new ArrayList<>();
-        deletedMartians = 0;
-        amountAlien = 0;
-    }
-    @Override
     public synchronized ArrayList<Element> getBullets(){
         ArrayList<Element> bullets = new ArrayList<>();
         for (ManagerBullet managerBullet : managerBullets) {
-            if(managerBullet.getElement().isActive()){
+            if(managerBullet.isActive()){
                 bullets.add(managerBullet.getElement());
             }
         }
-        
         return bullets;
     }
     @Override
@@ -199,6 +191,6 @@ public class ManagerModel implements ContractPlay.Model {
     }
     @Override
     public void setTypePacecraft(int type){
-        managerPacecraft.getPacecraft().setType(type);
+        managerPacecraft.setType(type);
     }
 }

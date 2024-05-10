@@ -29,6 +29,15 @@ public class ManagerPacecraft {
             pacecraft.setDx(pacecraft.getDx()-10);
         }
     }
+    public int getType(){
+        return pacecraft.getType();
+    }
+    public void setType(int type){
+        pacecraft.setType(type);
+    }
+    public int getDx(){
+        return pacecraft.getDx();
+    }
     public Pacecraft getPacecraft() {
         return pacecraft;
     }
