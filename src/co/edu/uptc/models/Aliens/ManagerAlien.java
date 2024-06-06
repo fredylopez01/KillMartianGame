@@ -1,4 +1,4 @@
-package co.edu.uptc.models.Aliens;
+package co.edu.uptc.models.aliens;
 
 import java.awt.Rectangle;
 

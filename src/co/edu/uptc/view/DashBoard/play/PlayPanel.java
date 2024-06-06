@@ -37,7 +37,7 @@ public class PlayPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-        g.drawImage((Values.adminImg.getImage("pathImgBackground")).getImage(),0, 0,this.getWidth(), this.getHeight(), this);
+        g.drawImage((Values.adminImg.getImage("pathImgBack")).getImage(),0, 0,this.getWidth(), this.getHeight(), this);
         paintAliens(g);
         paintPaceCraft(g);
         paintBullets(g);

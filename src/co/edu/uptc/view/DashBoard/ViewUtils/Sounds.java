@@ -18,7 +18,6 @@ public class Sounds {
     }
 
     public void playSoundShoot(){
-        soundShoot.stop();
         soundShoot.play();
     }
 
@@ -27,7 +26,6 @@ public class Sounds {
     }
 
     public void playSoundBurst(){
-        soundBurst.stop();
         soundBurst.play();
     }
 

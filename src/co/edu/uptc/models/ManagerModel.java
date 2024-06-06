@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import co.edu.uptc.Utils.MyUtils;
 import co.edu.uptc.Utils.Values;
-import co.edu.uptc.models.Aliens.ManAlienHorizontal;
-import co.edu.uptc.models.Aliens.ManAlienVertical;
-import co.edu.uptc.models.Aliens.ManagerAlien;
+import co.edu.uptc.models.aliens.ManAlienHorizontal;
+import co.edu.uptc.models.aliens.ManAlienVertical;
+import co.edu.uptc.models.aliens.ManagerAlien;
 import co.edu.uptc.pojos.Element;
 import co.edu.uptc.presenter.ContractPlay;
 import co.edu.uptc.presenter.ContractPlay.Presenter;
@@ -19,6 +19,7 @@ public class ManagerModel implements ContractPlay.Model {
     private ArrayList<ManagerBullet> managerBullets;
     private int deletedMartians;
     private int amountAlien;
+    private int lastBullet;
     Sounds sounds;
 
     public ManagerModel(){
@@ -45,14 +46,17 @@ public class ManagerModel implements ContractPlay.Model {
     private synchronized void addAlien() {
         for (int i = 0; i < managerElements.size(); i++) {
             if(!managerElements.get(i).isActive()){
-                ManagerAlien managerElement = new ManAlienVertical();
+                ManagerAlien managerElement = new ManAlienHorizontal();
                 managerElements.set(i, managerElement);
                 amountAlien++;
             }
             managerElements.get(i).move();
         }
-        if(managerElements.size() < 5){
-            ManagerAlien managerElement = new ManAlienVertical();
+        createAliens();
+    }
+    private void createAliens(){
+        if(managerElements.size() < Values.maxAliens){
+            ManagerAlien managerElement = new ManAlienHorizontal();
             managerElements.add(managerElement);
             amountAlien++;
         }
@@ -77,7 +81,7 @@ public class ManagerModel implements ContractPlay.Model {
     }
     private void verifyPositions(ManagerBullet managerBullet){
         for (ManagerAlien managerAlien : managerElements) {
-            if(managerBullet.intersects(managerAlien)){
+            if(managerAlien.isActive() && managerBullet.intersects(managerAlien)){
                 efectImpact(managerAlien, managerBullet);
             }
         }
@@ -94,18 +98,17 @@ public class ManagerModel implements ContractPlay.Model {
     @Override
     public synchronized void shoot(){
         if(presenter.isGameWorking()){
-            for (int i = 0; i < 2; i++) {
-                if(managerBullets.size() < 2){
-                    sounds.playSoundShoot();
-                    addFirstBullets(i);
-                    MyUtils.sleep(20);
-                }
-                if(!managerBullets.get(i).isActive()) {
-                    sounds.playSoundShoot();
-                    addBullet(i);
-                    MyUtils.sleep(20);
-                }
+            if(lastBullet>=Values.maxBullets){
+                lastBullet=0;
             }
+            if(managerBullets.size() < Values.maxBullets){
+                sounds.playSoundShoot();
+                addFirstBullets(lastBullet);
+            } else if(!managerBullets.get(lastBullet).isActive()) {
+                sounds.playSoundShoot();
+                addBullet(lastBullet);
+            }
+            lastBullet++;
         }
     }
     private void addFirstBullets(int i){

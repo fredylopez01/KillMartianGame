@@ -13,6 +13,8 @@ public class Values {
     public static int speedBullet = Integer.valueOf(AdminProperties.read("speedBullet"));
     public static int minLengthAlien = Integer.valueOf(AdminProperties.read("minLengthAlien"));
     public static int maxLengthAlien = Integer.valueOf(AdminProperties.read("maxLengthAlien"));
+    public static int maxAliens = Integer.valueOf(AdminProperties.read("maxAliens"));
+    public static int maxBullets = Integer.valueOf(AdminProperties.read("maxBullets"));
 
     public static String pathSoundBackground = AdminProperties.read("pathSoundBackground");
     public static String pathSoundShoot = AdminProperties.read("pathSoundShoot");

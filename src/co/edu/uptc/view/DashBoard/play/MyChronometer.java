@@ -1,5 +1,6 @@
 package co.edu.uptc.view.DashBoard.play;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 
@@ -9,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import co.edu.uptc.Utils.Values;
+import co.edu.uptc.view.DashBoard.ViewUtils.ShapedPanelLoginUI;
 
 public class MyChronometer extends JPanel {
     private Timer timer;
@@ -36,6 +38,7 @@ public class MyChronometer extends JPanel {
         lblChronometer.setIcon(imgChronometer);
         lblChronometer.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
         this.add(lblChronometer);
+        this.setUI(new ShapedPanelLoginUI(Color.WHITE));
     }
 
     public void updateTime(){

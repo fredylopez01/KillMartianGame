@@ -1,4 +1,4 @@
-package co.edu.uptc.models.Aliens;
+package co.edu.uptc.models.aliens;
 
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.DirectionEnum;
@@ -11,7 +11,7 @@ public class ManAlienVertical extends ManagerAlien {
 
     @Override
     public void initialPosition() {
-        getElement().setX((int)(Math.random()*Values.widthWindow));
+        getElement().setX((int)(Math.random()*((Values.widthWindow-getElement().getWidth())-1)));
         getElement().setY(0);
         setDirection(DirectionEnum.DOWN);
     }

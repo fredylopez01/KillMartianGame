@@ -1,6 +1,7 @@
 package co.edu.uptc.view.DashBoard.play;
 
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Insets;
@@ -24,6 +25,7 @@ public class MenuPanel extends JPanel {
     private MyChronometer chronometer;
     private JLabel lblDeletedMartians;
     private JLabel lblActiveMartians;
+    private ImageIcon imgAlien;
     private ImageIcon imgDeletedMartians;
 
     public MenuPanel(ActionListener listener) {
@@ -43,7 +45,9 @@ public class MenuPanel extends JPanel {
        chronometer = new MyChronometer(listener);
        add(chronometer);
 
-       lblActiveMartians = new JLabel();
+       imgAlien = (Values.adminImg.getImage("pathImgAlien"));
+       lblActiveMartians = new JLabel(imgAlien);
+       lblActiveMartians.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
        lblActiveMartians.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
        lblActiveMartians.setForeground(new Color(0x230443));
        updateActiveMartians(0);
@@ -52,6 +56,7 @@ public class MenuPanel extends JPanel {
        imgDeletedMartians = (Values.adminImg.getImage("pathImgDeletedMartians"));
        lblDeletedMartians = new JLabel();
        lblDeletedMartians.setIcon(imgDeletedMartians);
+       lblDeletedMartians.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
        lblDeletedMartians.setFont(new Font(Font.DIALOG, Font.BOLD, 15));
        updateDeletedMartians(0);
        add(lblDeletedMartians);
@@ -92,7 +97,7 @@ public class MenuPanel extends JPanel {
         lblDeletedMartians.setText(""+deletedMartians);
     }
     public void updateActiveMartians(int activeMartians){
-        lblActiveMartians.setText("Martians: "+activeMartians);
+        lblActiveMartians.setText(""+activeMartians);
     }
 
     public void styleBtn(JButton btn, Insets insets, ActionListener listener){

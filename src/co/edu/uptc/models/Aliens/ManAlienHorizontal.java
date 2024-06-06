@@ -1,4 +1,4 @@
-package co.edu.uptc.models.Aliens;
+package co.edu.uptc.models.aliens;
 
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.DirectionEnum;
