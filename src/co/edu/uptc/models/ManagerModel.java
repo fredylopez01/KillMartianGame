@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import co.edu.uptc.Utils.MyUtils;
 import co.edu.uptc.Utils.Values;
+import co.edu.uptc.models.Aliens.ManAlienHorizontal;
+import co.edu.uptc.models.Aliens.ManAlienVertical;
+import co.edu.uptc.models.Aliens.ManagerAlien;
 import co.edu.uptc.pojos.Element;
 import co.edu.uptc.presenter.ContractPlay;
 import co.edu.uptc.presenter.ContractPlay.Presenter;
@@ -39,17 +42,17 @@ public class ManagerModel implements ContractPlay.Model {
         });
         thread.start();
     }
-    public synchronized void addAlien() {
+    private synchronized void addAlien() {
         for (int i = 0; i < managerElements.size(); i++) {
             if(!managerElements.get(i).isActive()){
-                ManagerAlien managerElement = new ManagerAlien();
+                ManagerAlien managerElement = new ManAlienVertical();
                 managerElements.set(i, managerElement);
                 amountAlien++;
             }
             managerElements.get(i).move();
         }
-        if(managerElements.size() < 10){
-            ManagerAlien managerElement = new ManagerAlien();
+        if(managerElements.size() < 5){
+            ManagerAlien managerElement = new ManAlienVertical();
             managerElements.add(managerElement);
             amountAlien++;
         }
@@ -72,24 +75,14 @@ public class ManagerModel implements ContractPlay.Model {
         });
         thread.start();
     }
-    public void verifyPositions(ManagerBullet managerBullet){
+    private void verifyPositions(ManagerBullet managerBullet){
         for (ManagerAlien managerAlien : managerElements) {
-            if(isBurst(managerBullet, managerAlien)){
+            if(managerBullet.intersects(managerAlien)){
                 efectImpact(managerAlien, managerBullet);
             }
         }
     }
-    public boolean isBurst(ManagerBullet bullet, ManagerAlien alien){
-        boolean isBoom = false;
-        Element b = bullet.getElement();
-        Element a = alien.getElement();
-        if(b.getX()>=a.getX() && b.getX()<a.getX()+a.getWidth()
-            && b.getY()>=a.getY() && b.getY()<a.getY()+a.getHeight()){
-            isBoom = true;
-        }
-        return isBoom;
-    }
-    public void efectImpact(ManagerAlien managerAlien, ManagerBullet managerBullet){
+    private void efectImpact(ManagerAlien managerAlien, ManagerBullet managerBullet){
         sounds.playSoundBurst();
         managerAlien.impact();
         managerAlien.stopThread();
@@ -99,27 +92,28 @@ public class ManagerModel implements ContractPlay.Model {
         sounds.stopSoundBurst();
     }
     @Override
-    public synchronized boolean shoot(){
+    public synchronized void shoot(){
         if(presenter.isGameWorking()){
             for (int i = 0; i < 2; i++) {
                 if(managerBullets.size() < 2){
+                    sounds.playSoundShoot();
                     addFirstBullets(i);
-                    return true;
+                    MyUtils.sleep(20);
                 }
                 if(!managerBullets.get(i).isActive()) {
+                    sounds.playSoundShoot();
                     addBullet(i);
-                    return true;
+                    MyUtils.sleep(20);
                 }
             }
         }
-        return false;
     }
-    public void addFirstBullets(int i){
+    private void addFirstBullets(int i){
         int postion = MyUtils.positionBullet(i, managerPacecraft.getDx(), managerPacecraft.getType());
         ManagerBullet managerBullet = new ManagerBullet(postion);
         managerBullets.add(managerBullet);
     }
-    public void addBullet(int i){
+    private void addBullet(int i){
         int postion = MyUtils.positionBullet(i, managerPacecraft.getDx(), managerPacecraft.getType());
         ManagerBullet managerBullet = new ManagerBullet(postion);
         managerBullets.set(i, managerBullet);

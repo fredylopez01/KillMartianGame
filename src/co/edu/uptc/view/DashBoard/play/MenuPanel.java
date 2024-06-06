@@ -89,7 +89,7 @@ public class MenuPanel extends JPanel {
         chronometer.restartChronometer();
     }
     public void updateDeletedMartians(int deletedMartians){
-        lblDeletedMartians.setText("Deleted Martians: "+deletedMartians);
+        lblDeletedMartians.setText(""+deletedMartians);
     }
     public void updateActiveMartians(int activeMartians){
         lblActiveMartians.setText("Martians: "+activeMartians);
@@ -111,7 +111,6 @@ public class MenuPanel extends JPanel {
 
     public void changeComand(JButton btn, String comand, ImageIcon icon){
         btn.setIcon(icon);
-        btn.setText(comand);
         btn.setActionCommand(comand);
         btn.repaint();
     }

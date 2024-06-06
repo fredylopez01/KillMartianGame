@@ -148,8 +148,8 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     }
 
     public void shoot(){
-        if(presenter.isGameWorking() && presenter.shoot()){
-            sounds.playSoundShoot();
+        if(presenter.isGameWorking()){
+            presenter.shoot();
         }
     }
 

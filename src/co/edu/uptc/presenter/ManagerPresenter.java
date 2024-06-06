@@ -54,8 +54,8 @@ public class ManagerPresenter implements ContractPlay.Presenter {
         model.stop();
     }
     @Override
-    public boolean shoot() {
-        return model.shoot();
+    public void shoot() {
+        model.shoot();
     }
     @Override
     public ArrayList<Element> getElements(){

@@ -1,9 +1,11 @@
 package co.edu.uptc.models;
 
+import java.awt.Rectangle;
+
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.pojos.Element;
 
-public class ManagerBullet {
+public class ManagerBullet extends Rectangle {
     private Element element;
     public boolean statusThread;
     
@@ -17,6 +19,7 @@ public class ManagerBullet {
         this.element.setY(Values.heightWindow-Values.lengthPaceCraft-70);
         this.element.setWidth(Values.lengthBullet);
         this.element.setHeight(Values.lengthBullet);
+        super.setBounds(element.getX(), element.getY(), element.getWidth(), element.getHeight());
         this.element.setType(0);
         this.element.setSpeed(Values.speedBullet);
         this.element.setActive(true);
@@ -26,6 +29,7 @@ public class ManagerBullet {
             element.setActive(false);
         }
         element.setY(element.getY()-element.getSpeed());
+        super.setLocation(element.getX(), element.getY());
     }
     public boolean isActive(){
         return element.isActive();
