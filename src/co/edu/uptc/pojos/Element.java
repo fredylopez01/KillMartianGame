@@ -8,6 +8,7 @@ public class Element {
     private int type;
     private int speed;
     private boolean isActive;
+    private String pathImg;
     public int getX() {
         return x;
     }
@@ -49,6 +50,12 @@ public class Element {
     }
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+    public String getPathImg() {
+        return pathImg;
+    }
+    public void setPathImg(String pathImg) {
+        this.pathImg = pathImg;
     }
     
 }

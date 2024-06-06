@@ -121,8 +121,6 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     }
     public synchronized void repaintComponents(){
         managerPanels.getPlayPanel().start(presenter.getElements());
-        managerPanels.getPlayPanel().movePaceCraft(presenter.getManagerPacecraft().getPacecraft());
-        managerPanels.getPlayPanel().shoot(presenter.getBullets());
         managerPanels.getPlayPanel().repaintPlay();
         managerPanels.getPlayPanel().updateActiveMartians(presenter.getActiveMartians());
         managerPanels.getPlayPanel().updateDeletedMartians(presenter.getDeletedMartians());
@@ -137,10 +135,10 @@ public class DashBoard extends JFrame implements ActionListener, KeyListener, Co
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
-            presenter.getManagerPacecraft().left();
+            presenter.paceCraftLeft();
         } 
         if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-            presenter.getManagerPacecraft().right();
+            presenter.paceCraftRight();
         } 
         if(key == keyToShoot){
             shoot();

@@ -17,6 +17,8 @@ public class ManagerModel implements ContractPlay.Model {
     private ArrayList<ManagerAlien> managerElements;
     private ManagerPacecraft managerPacecraft;
     private ArrayList<ManagerBullet> managerBullets;
+    private int maxAliens;
+    private int maxBullets;
     private int deletedMartians;
     private int amountAlien;
     private int lastBullet;
@@ -28,6 +30,8 @@ public class ManagerModel implements ContractPlay.Model {
         managerBullets = new ArrayList<>();
         deletedMartians = 0;
         amountAlien = 0;
+        maxAliens = 5;
+        maxBullets = 2;
         sounds = new Sounds();
     }
     @Override
@@ -55,7 +59,7 @@ public class ManagerModel implements ContractPlay.Model {
         createAliens();
     }
     private void createAliens(){
-        if(managerElements.size() < Values.maxAliens){
+        if(managerElements.size() < maxAliens){
             ManagerAlien managerElement = new ManAlienHorizontal();
             managerElements.add(managerElement);
             amountAlien++;
@@ -98,28 +102,30 @@ public class ManagerModel implements ContractPlay.Model {
     @Override
     public synchronized void shoot(){
         if(presenter.isGameWorking()){
-            if(lastBullet>=Values.maxBullets){
+            if(lastBullet >= maxBullets){
                 lastBullet=0;
             }
-            if(managerBullets.size() < Values.maxBullets){
+            if(managerBullets.size() < maxBullets){
                 sounds.playSoundShoot();
-                addFirstBullets(lastBullet);
+                managerBullets.add(createBullet(lastBullet));
             } else if(!managerBullets.get(lastBullet).isActive()) {
                 sounds.playSoundShoot();
-                addBullet(lastBullet);
+                managerBullets.set(lastBullet, createBullet(lastBullet));
             }
             lastBullet++;
         }
     }
-    private void addFirstBullets(int i){
-        int postion = MyUtils.positionBullet(i, managerPacecraft.getDx(), managerPacecraft.getType());
-        ManagerBullet managerBullet = new ManagerBullet(postion);
-        managerBullets.add(managerBullet);
+    private ManagerBullet createBullet(int i){
+        int postion = MyUtils.positionBullet(i, managerPacecraft.getX(), managerPacecraft.getType());
+        return new ManagerBullet(postion);
     }
-    private void addBullet(int i){
-        int postion = MyUtils.positionBullet(i, managerPacecraft.getDx(), managerPacecraft.getType());
-        ManagerBullet managerBullet = new ManagerBullet(postion);
-        managerBullets.set(i, managerBullet);
+    @Override
+    public void paceCraftLeft() {
+        managerPacecraft.left();
+    }
+    @Override
+    public void paceCraftRight() {
+        managerPacecraft.right();
     }
     @Override
     public synchronized void start(){
@@ -158,21 +164,13 @@ public class ManagerModel implements ContractPlay.Model {
         for (ManagerAlien managerElement : managerElements) {
             elements.add(managerElement.getElement());
         }
-        return elements;
-    }
-    @Override
-    public synchronized ArrayList<Element> getBullets(){
-        ArrayList<Element> bullets = new ArrayList<>();
         for (ManagerBullet managerBullet : managerBullets) {
             if(managerBullet.isActive()){
-                bullets.add(managerBullet.getElement());
+                elements.add(managerBullet.getElement());
             }
         }
-        return bullets;
-    }
-    @Override
-    public synchronized ManagerPacecraft getManagerPacecraft(){
-        return managerPacecraft;
+        elements.add(managerPacecraft.getPacecraft());
+        return elements;
     }
     @Override
     public void setPresenter(Presenter presenter) {

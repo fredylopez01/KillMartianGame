@@ -21,6 +21,7 @@ public class ManagerBullet extends Rectangle {
         this.element.setHeight(Values.lengthBullet);
         super.setBounds(element.getX(), element.getY(), element.getWidth(), element.getHeight());
         this.element.setType(0);
+        this.element.setPathImg("pathImgBullet1");
         this.element.setSpeed(Values.speedBullet);
         this.element.setActive(true);
     }

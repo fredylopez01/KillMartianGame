@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import co.edu.uptc.pojos.Element;
-import co.edu.uptc.pojos.Pacecraft;
 
 public class ContainerPlayPanel extends JPanel {
     private MenuPanel menuPanel;
@@ -46,12 +45,6 @@ public class ContainerPlayPanel extends JPanel {
     }
     public void start(ArrayList<Element> alliens){
         playPanel.start(alliens);
-    }
-    public void movePaceCraft(Pacecraft pacecraft){
-        playPanel.movePaceCraft(pacecraft);
-    }
-    public void shoot(ArrayList<Element> bullets){
-        playPanel.shoot(bullets);
     }
     public void repaintPlay(){
         playPanel.repaint();

@@ -23,15 +23,17 @@ public abstract class ManagerAlien extends Rectangle {
         this.element.setWidth(length);
         this.element.setHeight(length);
         super.setSize(length, length);
-        this.element.setType((int)(Math.random()*5));
+        this.element.setType((int)(Math.random()*4)+1);
+        this.element.setPathImg("pathImgMartian"+this.element.getType());
         this.element.setSpeed((int)(Math.random()*(Values.maxSpeedTime-Values.minSpeedTime+1)+Values.minSpeedTime));
         this.element.setActive(true);
     }
     public abstract void move();
     public abstract void initialPosition();
     public void impact(){
-        for (int i = 5; i < 9; i++) {
+        for (int i = 1; i < 6; i++) {
             element.setType(i);
+            element.setPathImg("pathImgBurst"+i);
             MyUtils.sleep(5);
         }
     }

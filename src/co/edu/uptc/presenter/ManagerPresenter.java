@@ -3,7 +3,6 @@ package co.edu.uptc.presenter;
 import java.util.ArrayList;
 
 import co.edu.uptc.models.ManagerModel;
-import co.edu.uptc.models.ManagerPacecraft;
 import co.edu.uptc.pojos.Element;
 import co.edu.uptc.presenter.ContractPlay.Model;
 import co.edu.uptc.presenter.ContractPlay.View;
@@ -66,14 +65,6 @@ public class ManagerPresenter implements ContractPlay.Presenter {
         model.restartGame();
     }
     @Override
-    public ManagerPacecraft getManagerPacecraft() {
-        return model.getManagerPacecraft();
-    }
-    @Override
-    public ArrayList<Element> getBullets() {
-        return model.getBullets();
-    }
-    @Override
     public boolean isPainted(){
         return this.isPainted;
     }
@@ -100,5 +91,13 @@ public class ManagerPresenter implements ContractPlay.Presenter {
     @Override
     public void setTypePacecraft(int type) {
         model.setTypePacecraft(type);
+    }
+    @Override
+    public void paceCraftLeft() {
+        model.paceCraftLeft();
+    }
+    @Override
+    public void paceCraftRight() {
+        model.paceCraftRight();
     }
 }
