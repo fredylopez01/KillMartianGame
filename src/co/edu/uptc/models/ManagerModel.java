@@ -6,6 +6,7 @@ import co.edu.uptc.Utils.MyUtils;
 import co.edu.uptc.Utils.Values;
 import co.edu.uptc.models.aliens.ManAlienHorizontal;
 import co.edu.uptc.models.aliens.ManAlienVertical;
+// import co.edu.uptc.models.aliens.ManAlienVertical;
 import co.edu.uptc.models.aliens.ManagerAlien;
 import co.edu.uptc.pojos.Element;
 import co.edu.uptc.presenter.ContractPlay;
@@ -24,7 +25,7 @@ public class ManagerModel implements ContractPlay.Model {
     private int lastBullet;
     Sounds sounds;
 
-    public ManagerModel(){
+    public ManagerModel() {
         managerElements = new ArrayList<>();
         managerPacecraft = new ManagerPacecraft();
         managerBullets = new ArrayList<>();
@@ -34,63 +35,68 @@ public class ManagerModel implements ContractPlay.Model {
         maxBullets = 2;
         sounds = new Sounds();
     }
+
     @Override
-    public void addAliens(){
+    public void addAliens() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(presenter.isGameWorking()) {
+                while (presenter.isGameWorking()) {
                     addAlien();
-                    MyUtils.sleep((int)(Math.random()*(Values.maxSpeedTimeAdd-Values.minSpeedTimeAdd+1)+Values.minSpeedTimeAdd));
+                    MyUtils.sleep((int) (Math.random() * (Values.maxSpeedTimeAdd - Values.minSpeedTimeAdd + 1)
+                            + Values.minSpeedTimeAdd));
                 }
             }
         });
         thread.start();
     }
+
     private synchronized void addAlien() {
         for (int i = 0; i < managerElements.size(); i++) {
-            if(!managerElements.get(i).isActive()){
-                ManagerAlien managerElement = new ManAlienHorizontal();
-                managerElements.set(i, managerElement);
+            if (!managerElements.get(i).isActive()) {
+                managerElements.set(i, createAlien());
                 amountAlien++;
             }
             managerElements.get(i).move();
         }
-        createAliens();
-    }
-    private void createAliens(){
-        if(managerElements.size() < maxAliens){
-            ManagerAlien managerElement = new ManAlienHorizontal();
-            managerElements.add(managerElement);
+        if (managerElements.size() < maxAliens) {
+            managerElements.add(createAlien());
             amountAlien++;
         }
     }
+
+    private ManagerAlien createAlien() {
+        return new ManAlienHorizontal();
+    }
+
     @Override
-    public void threadVerifyPositions(){
+    public void threadVerifyPositions() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(presenter.isGameWorking()) {
-                    for (ManagerBullet managerBullet: managerBullets) {
-                        if(managerBullet.isActive()){
+                while (presenter.isGameWorking()) {
+                    for (ManagerBullet managerBullet : managerBullets) {
+                        if (managerBullet.isActive()) {
                             verifyPositions(managerBullet);
                             managerBullet.up();
                         }
                     }
-                    MyUtils.sleep(Values.speedBullet*2);
+                    MyUtils.sleep(Values.speedBullet * 2);
                 }
             }
         });
         thread.start();
     }
-    private void verifyPositions(ManagerBullet managerBullet){
+
+    private void verifyPositions(ManagerBullet managerBullet) {
         for (ManagerAlien managerAlien : managerElements) {
-            if(managerAlien.isActive() && managerBullet.intersects(managerAlien)){
+            if (managerAlien.isActive() && managerBullet.intersects(managerAlien)) {
                 efectImpact(managerAlien, managerBullet);
             }
         }
     }
-    private void efectImpact(ManagerAlien managerAlien, ManagerBullet managerBullet){
+
+    private void efectImpact(ManagerAlien managerAlien, ManagerBullet managerBullet) {
         sounds.playSoundBurst();
         managerAlien.impact();
         managerAlien.stopThread();
@@ -99,40 +105,46 @@ public class ManagerModel implements ContractPlay.Model {
         MyUtils.sleep(20);
         sounds.stopSoundBurst();
     }
+
     @Override
-    public synchronized void shoot(){
-        if(presenter.isGameWorking()){
-            if(lastBullet >= maxBullets){
-                lastBullet=0;
+    public synchronized void shoot() {
+        if (presenter.isGameWorking()) {
+            if (lastBullet >= maxBullets) {
+                lastBullet = 0;
             }
-            if(managerBullets.size() < maxBullets){
+            if (managerBullets.size() < maxBullets) {
                 sounds.playSoundShoot();
                 managerBullets.add(createBullet(lastBullet));
-            } else if(!managerBullets.get(lastBullet).isActive()) {
+            } else if (!managerBullets.get(lastBullet).isActive()) {
                 sounds.playSoundShoot();
                 managerBullets.set(lastBullet, createBullet(lastBullet));
             }
             lastBullet++;
         }
     }
-    private ManagerBullet createBullet(int i){
+
+    private ManagerBullet createBullet(int i) {
         int postion = MyUtils.positionBullet(i, managerPacecraft.getX(), managerPacecraft.getType());
         return new ManagerBullet(postion);
     }
+
     @Override
     public void paceCraftLeft() {
         managerPacecraft.left();
     }
+
     @Override
     public void paceCraftRight() {
         managerPacecraft.right();
     }
+
     @Override
-    public synchronized void start(){
+    public synchronized void start() {
         managerPacecraft.setStatusThread(true);
     }
+
     @Override
-    public void resume(){
+    public void resume() {
         for (ManagerAlien managerElement : managerElements) {
             managerElement.statusThread = true;
         }
@@ -141,8 +153,9 @@ public class ManagerModel implements ContractPlay.Model {
             managerBullet.statusThread = true;
         }
     }
+
     @Override
-    public void stop(){
+    public void stop() {
         for (ManagerAlien managerElement : managerElements) {
             managerElement.statusThread = false;
         }
@@ -151,6 +164,7 @@ public class ManagerModel implements ContractPlay.Model {
             managerBullet.statusThread = false;
         }
     }
+
     @Override
     public void restartGame() {
         managerElements = new ArrayList<>();
@@ -158,34 +172,39 @@ public class ManagerModel implements ContractPlay.Model {
         deletedMartians = 0;
         amountAlien = 0;
     }
+
     @Override
-    public synchronized ArrayList<Element> getElements(){
+    public synchronized ArrayList<Element> getElements() {
         ArrayList<Element> elements = new ArrayList<>();
         for (ManagerAlien managerElement : managerElements) {
             elements.add(managerElement.getElement());
         }
         for (ManagerBullet managerBullet : managerBullets) {
-            if(managerBullet.isActive()){
+            if (managerBullet.isActive()) {
                 elements.add(managerBullet.getElement());
             }
         }
         elements.add(managerPacecraft.getPacecraft());
         return elements;
     }
+
     @Override
     public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
     }
+
     @Override
     public int getDeletedMartians() {
         return deletedMartians;
     }
+
     @Override
-    public int getActiveMartians(){
+    public int getActiveMartians() {
         return amountAlien;
     }
+
     @Override
-    public void setTypePacecraft(int type){
+    public void setTypePacecraft(int type) {
         managerPacecraft.setType(type);
     }
 }

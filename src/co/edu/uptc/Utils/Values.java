@@ -17,5 +17,5 @@ public class Values {
     public static String pathSoundBackground = AdminProperties.read("pathSoundBackground");
     public static String pathSoundShoot = AdminProperties.read("pathSoundShoot");
     public static String pathSoundBurst = AdminProperties.read("pathSoundBurst");
-    
+
 }
